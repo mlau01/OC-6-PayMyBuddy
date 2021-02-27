@@ -50,16 +50,9 @@ CREATE TABLE transfer (
 CREATE TABLE contact (
                 id INTEGER NOT NULL AUTO_INCREMENT,
                 user_id INTEGER NOT NULL,
-                contact_user_id INTEGER NOT NULL,
+                contact_email VARCHAR(50) NOT NULL,
                 CONSTRAINT contact_pk PRIMARY KEY (id)
 );
-
-
-ALTER TABLE contact ADD CONSTRAINT user_friendship_fk
-FOREIGN KEY (contact_user_id)
-REFERENCES user (id)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION;
 
 ALTER TABLE contact ADD CONSTRAINT user_friendship_fk1
 FOREIGN KEY (user_id)
@@ -96,3 +89,5 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION;
 
 INSERT INTO user (first_name, last_name, password, email, balance, currency) VALUES ("Matt", "Lau", "test", "matt.lau@gmail.com", 0, "EUR");
+INSERT INTO user (first_name, last_name, password, email, balance, currency) VALUES ("Yann", "Lau", "test", "yann.lau@gmail.com", 0, "EUR");
+INSERT INTO contact (user_id, contact_email) VALUES (1,"yann.lau@gmail.com");

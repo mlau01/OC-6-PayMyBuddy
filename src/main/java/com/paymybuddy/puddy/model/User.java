@@ -48,16 +48,16 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	private CURRENCY currency;
 	
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
-	private List<User> contacts;
+	private Set<Contact> contacts;
 	
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "owner_user_id")
 	private Set<BankAccount> bankAccounts;
 	
 	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "destination_user_id")
+	@JoinColumn(name = "recipient_user_id")
 	private Set<Versement> versements;
 	
 	@OneToMany(fetch = FetchType.LAZY)
