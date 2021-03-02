@@ -12,7 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.paymybuddy.puddy.CURRENCY;
+import com.paymybuddy.puddy.enums.CURRENCY;
 
 import lombok.Data;
 
@@ -27,6 +27,9 @@ public class Versement {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	@Column(name = "bank_account_iban")
+	private String bankAccountIban;
+	
 	@Column(name="date")
 	private Date date;
 	
@@ -38,14 +41,5 @@ public class Versement {
 	
 	@Column(name="description")
 	private String description;
-	
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "recipient_user_id")
-	private User recipient;
-	
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name ="bank_account_iban")
-	private BankAccount bankAccount;
-
 
 }

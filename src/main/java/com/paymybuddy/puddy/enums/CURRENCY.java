@@ -1,4 +1,4 @@
-package com.paymybuddy.puddy;
+package com.paymybuddy.puddy.enums;
 
 public enum CURRENCY {
 	

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.paymybuddy.puddy.enums.CURRENCY;
 import com.paymybuddy.puddy.model.User;
 import com.paymybuddy.puddy.repository.UserRepository;
 
@@ -29,7 +30,7 @@ public class UserRepositoryTest {
 		assertEquals("matt.lau@gmail.com", firstUser.getEmail());
 		assertEquals(0, firstUser.getBalance());
 		assertEquals(CURRENCY.EUR, firstUser.getCurrency());
-		assertEquals("yann.lau@gmail.com", firstUser.getContacts().iterator().next().getEmail());
+		assertEquals("Yann", firstUser.getContacts().iterator().next().getFirstName());
 		//INSERT INTO user (first_name, last_name, password, email, balance, currency) VALUES ("Matt", "Lau", "test", "matt.lau@gmail.com", 0, "EUR");
 	}
 

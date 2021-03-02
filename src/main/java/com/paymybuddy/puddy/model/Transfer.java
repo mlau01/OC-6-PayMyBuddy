@@ -9,10 +9,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-import com.paymybuddy.puddy.CURRENCY;
+import com.paymybuddy.puddy.enums.CURRENCY;
 
 import lombok.Data;
 
@@ -27,6 +30,7 @@ public class Transfer {
 	private Integer id;
 	
 	@Column(name="date")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
 	
 	@Column(name="amount")
@@ -41,7 +45,13 @@ public class Transfer {
 	@Column(name="description")
 	private String description;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	//TODO
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "source_user_id")
+	private User source;
+	
+	//TODO
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "recipient_user_id")
 	private User recipient;
 
