@@ -62,7 +62,7 @@ public class User {
 	
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "source_user_id")
-	private Set<Versement> transfers;
+	private Set<Transfer> transfers;
 	
 
 }
