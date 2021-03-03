@@ -52,13 +52,13 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	private CURRENCY currency;
 	
-	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "contact",
 				joinColumns = {@JoinColumn(name="user_id")},
 				inverseJoinColumns = {@JoinColumn(name="contact_user_id")})
 	private Set<User> contacts;
 	
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "owner_user_id")
 	private Set<BankAccount> bankAccounts;
 

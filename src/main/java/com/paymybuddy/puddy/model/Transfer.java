@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -37,6 +39,7 @@ public class Transfer {
 	private Double amount;
 	
 	@Column(name="currency")
+	@Enumerated(EnumType.STRING)
 	private CURRENCY currency;
 	
 	@Column(name="tax")

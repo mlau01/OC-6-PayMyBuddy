@@ -10,7 +10,7 @@ CREATE TABLE user (
                 last_name VARCHAR(20) NOT NULL,
                 password VARCHAR(20) NOT NULL,
                 email VARCHAR(50) NOT NULL,
-                balance DECIMAL DEFAULT 0 NOT NULL,
+                balance DOUBLE DEFAULT 0 NOT NULL,
                 currency VARCHAR(3) NOT NULL,
                 PRIMARY KEY (id)
 );
@@ -29,7 +29,7 @@ CREATE TABLE versement (
                 bank_account_iban VARCHAR(50) NOT NULL,
                 date DATETIME NOT NULL,
                 description VARCHAR(100),
-                amount DECIMAL NOT NULL,
+                amount DOUBLE NOT NULL,
                 currency VARCHAR(3) NOT NULL,
                 PRIMARY KEY (id)
 );
@@ -40,9 +40,9 @@ CREATE TABLE transfer (
                 recipient_user_id INT NOT NULL,
                 source_user_id INT NOT NULL,
                 date DATETIME NOT NULL,
-                amount DECIMAL NOT NULL,
+                amount DOUBLE NOT NULL,
                 currency VARCHAR(3) NOT NULL,
-                tax DECIMAL NOT NULL,
+                tax FLOAT NOT NULL,
                 description VARCHAR(100) NOT NULL,
                 PRIMARY KEY (id)
 );
@@ -94,4 +94,8 @@ ON UPDATE NO ACTION;
 
 INSERT INTO user (first_name, last_name, password, email, balance, currency) VALUES ("Matt", "Lau", "test", "matt.lau@gmail.com", 0, "EUR");
 INSERT INTO user (first_name, last_name, password, email, balance, currency) VALUES ("Yann", "Lau", "test", "yann.lau@gmail.com", 0, "EUR");
+INSERT INTO user (first_name, last_name, password, email, balance, currency) VALUES ("Herve", "Loiseau", "test", "herve.loiseau@gmail.com", 0, "EUR");
 INSERT INTO contact (user_id, contact_user_id) VALUES (1,2);
+INSERT INTO contact (user_id, contact_user_id) VALUES (1,3);
+INSERT INTO bank_account (iban, owner_user_id, description) VALUES ("FR00212332043JKRE20", 1, "CCP");
+INSERT INTO versement (bank_account_iban, date, description, amount, currency) VALUES ("FR00212332043JKRE20", "2020-09-24 22:21:20", "test", 29.99, "EUR");

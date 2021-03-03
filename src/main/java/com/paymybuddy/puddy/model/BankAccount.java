@@ -25,7 +25,7 @@ public class BankAccount {
 	private String description;
 	
 	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "iban")
-	private Set<Versement> versements;
+	@JoinColumn(name = "bank_account_iban")
+	private Set<Versement> versement;
 
 }

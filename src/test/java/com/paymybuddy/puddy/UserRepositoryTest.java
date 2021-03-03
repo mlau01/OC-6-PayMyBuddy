@@ -2,6 +2,7 @@ package com.paymybuddy.puddy;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.Iterator;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -30,7 +31,11 @@ public class UserRepositoryTest {
 		assertEquals("matt.lau@gmail.com", firstUser.getEmail());
 		assertEquals(0, firstUser.getBalance());
 		assertEquals(CURRENCY.EUR, firstUser.getCurrency());
-		assertEquals("Yann", firstUser.getContacts().iterator().next().getFirstName());
+		
+		Iterator<User> userIterator = firstUser.getContacts().iterator();
+		
+		assertEquals("Yann",userIterator.next().getFirstName());
+		assertEquals("Herve", userIterator.next().getFirstName());
 		//INSERT INTO user (first_name, last_name, password, email, balance, currency) VALUES ("Matt", "Lau", "test", "matt.lau@gmail.com", 0, "EUR");
 	}
 
