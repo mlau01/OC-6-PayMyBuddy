@@ -1,10 +1,10 @@
 package com.paymybuddy.puddy.model;
 
-import java.util.List;
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -19,6 +19,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import com.paymybuddy.puddy.enums.CURRENCY;
 
 import lombok.Data;
@@ -26,7 +29,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name="user")
-public class User {
+public class User implements Serializable, UserDetails {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,5 +69,32 @@ public class User {
 	@JoinColumn(name = "source_user_id")
 	private Set<Transfer> transfers;
 	
+	public String getUsername() {
+		return email;
+	}
 
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return null;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return false;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return false;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return false;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return false;
+	}
 }
