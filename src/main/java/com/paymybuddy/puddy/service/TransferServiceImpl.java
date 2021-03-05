@@ -50,8 +50,7 @@ public class TransferServiceImpl implements ITransferService {
 		}
 		
 		User transmitterUser = userService.getUserByMail(transmitterMail);
-		User recipientUser = userService.getUserByMail(recipientMail);
-		
+
 		//Calculate taxed amount and check if transmitter has credit to continue
 		double taxedAmount = amount + (amount * 0.05);
 		double transmitterBalance = transmitterUser.getBalance();
@@ -59,6 +58,7 @@ public class TransferServiceImpl implements ITransferService {
 			throw new NotEnoughCreditException("insufficient credit to do this transfer");
 		}
 		
+		User recipientUser = userService.getUserByMail(recipientMail);
 		userService.debit(transmitterUser, taxedAmount);
 		userService.credit(recipientUser, amount);
 		

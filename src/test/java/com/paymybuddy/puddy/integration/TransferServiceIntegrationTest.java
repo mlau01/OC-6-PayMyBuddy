@@ -25,18 +25,6 @@ public class TransferServiceIntegrationTest {
 	//TODO Use interface here
 	@Autowired
 	private UserServiceImpl userService;
-
-	@Test
-	public void doTransferWithInvalidAmountTest_shouldThrowException() throws NotEnoughCreditException, InvalidAmountException {
-		
-		assertThrows(InvalidAmountException.class, () -> transferService.doTransfer("matt.lau@gmail.com", "yann.lau@gmail.com", 0, CURRENCY.EUR, "test"));
-	}
-	
-	@Test
-	public void doTransferWithGreaterAmountTest_shouldThrowException() throws NotEnoughCreditException, InvalidAmountException {
-		
-		assertThrows(NotEnoughCreditException.class, () -> transferService.doTransfer("matt.lau@gmail.com", "yann.lau@gmail.com", 9999999, CURRENCY.EUR, "test"));
-	}
 	
 	@Test
 	public void doTransferTest_shouldCreateNewTranferAndUpdateUserBalances() throws NotEnoughCreditException, InvalidAmountException {
