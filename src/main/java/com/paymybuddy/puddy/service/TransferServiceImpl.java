@@ -27,6 +27,20 @@ public class TransferServiceImpl implements ITransferService {
 		transferRepo = p_transferRepository;
 	}
 	
+	/**
+	 * Transactional implementation doing a balance transfer between a transmitter and a recipient user
+	 * Create a Transfer object representing the transfer.
+	 * @param transmitterMail Mail of the transmitter user
+	 * @param recipientMail Mail of the recipient user
+	 * @param amount Amount of money to transfer
+	 * @param currency Currency used based on CURRENCY enumeration
+	 * @param description A description of the transfer
+	 * @return Transfer object created
+	 * @throws {@link InvalidAmountException}
+	 * @throws {@link NotEnoughCreditException}
+	 * @author Mathias Lauer
+	 * 5 mars 2021
+	 */
 	@Transactional
 	public Transfer doTransfer(String transmitterMail, String recipientMail, double amount, CURRENCY currency, String description) 
 			throws NotEnoughCreditException, InvalidAmountException {

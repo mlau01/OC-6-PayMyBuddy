@@ -22,6 +22,14 @@ public class UserServiceImpl implements UserDetailsService {
 		userRepository = p_userRepo;
 	}
 	
+	/**
+	 * Used by Spring Security for login
+	 * Encapsulation of an User retrieved by mail
+	 * @param mail Mail
+	 * @return UserDetails object encapsulate the User
+	 * @author Mathias Lauer
+	 * 5 mars 2021
+	 */
 	@Override
 	public UserDetails loadUserByUsername(String mail){
 		Objects.requireNonNull(mail);
@@ -29,20 +37,43 @@ public class UserServiceImpl implements UserDetailsService {
 		return getUserByMail(mail);
 	}
 	
+	/**
+	 * Get an user by his mail
+	 * @param mail
+	 * @return User object
+	 * @author Mathias Lauer
+	 * 5 mars 2021
+	 */
 	public User getUserByMail(String mail) {
 		User user = userRepository.findAllByEmail(mail).orElseThrow(() -> new UsernameNotFoundException("User not found"));
 		
 		return user;
 	}
 	
-	public void credit(User user, double amount) {
+	/**
+	 * Credit the balance of an user
+	 * @param user User to credit
+	 * @param amount Amount to credit
+	 * @return User object persisted
+	 * @author Mathias Lauer
+	 * 5 mars 2021
+	 */
+	public User credit(User user, double amount) {
 		user.setBalance(user.getBalance() + amount);
-		userRepository.save(user);
+		return userRepository.save(user);
 	}
 	
-	public void debit(User user, double amount) {
+	/**
+	 * Debit the balance of an user
+	 * @param user User to debit
+	 * @param amount Amount to debit
+	 * @return User object persisted
+	 * @author Mathias Lauer
+	 * 5 mars 2021
+	 */
+	public User debit(User user, double amount) {
 		user.setBalance(user.getBalance() - amount);
-		userRepository.save(user);
+		return userRepository.save(user);
 	}
 
 }

@@ -47,7 +47,7 @@ public class TransferServiceIntegrationTest {
 		double transmitterBalanceBfTransfer = transmitter.getBalance();
 		double recipientBalanceBfTransfer = recipient.getBalance();
 		
-		transferService.doTransfer("matt.lau@gmail.com", "yann.lau@gmail.com", amount, CURRENCY.EUR, "test");
+		Transfer transfer = transferService.doTransfer("matt.lau@gmail.com", "yann.lau@gmail.com", amount, CURRENCY.EUR, "test");
 		
 		assertEquals(transmitterBalanceBfTransfer - (amount + (amount * 0.05)), userService.getUserByMail("matt.lau@gmail.com").getBalance());
 		assertEquals(recipientBalanceBfTransfer + amount, userService.getUserByMail("yann.lau@gmail.com").getBalance());
