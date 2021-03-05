@@ -66,7 +66,7 @@ public class User implements Serializable, UserDetails {
 	private Set<BankAccount> bankAccounts;
 
 	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "source_user_id")
+	@JoinColumn(name = "transmitter_user_id")
 	private Set<Transfer> transfers;
 	
 	public String getUsername() {

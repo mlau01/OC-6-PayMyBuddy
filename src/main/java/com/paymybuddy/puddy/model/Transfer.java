@@ -48,12 +48,10 @@ public class Transfer {
 	@Column(name="description")
 	private String description;
 	
-	//TODO
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "source_user_id")
+	@JoinColumn(name = "transmitter_user_id")
 	private User source;
 	
-	//TODO
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "recipient_user_id")
 	private User recipient;

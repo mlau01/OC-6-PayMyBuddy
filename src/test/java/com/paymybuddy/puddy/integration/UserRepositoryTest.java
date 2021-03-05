@@ -1,4 +1,4 @@
-package com.paymybuddy.puddy;
+package com.paymybuddy.puddy.integration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -29,13 +29,9 @@ public class UserRepositoryTest {
 		assertEquals("Lau", firstUser.getLastName());
 		assertEquals("test", firstUser.getPassword());
 		assertEquals("matt.lau@gmail.com", firstUser.getEmail());
-		assertEquals(0, firstUser.getBalance());
 		assertEquals(CURRENCY.EUR, firstUser.getCurrency());
 		
-		Iterator<User> userIterator = firstUser.getContacts().iterator();
-		
-		assertEquals("Yann",userIterator.next().getFirstName());
-		assertEquals("Herve", userIterator.next().getFirstName());
+		assertEquals(2,firstUser.getContacts().size());
 		//INSERT INTO user (first_name, last_name, password, email, balance, currency) VALUES ("Matt", "Lau", "test", "matt.lau@gmail.com", 0, "EUR");
 	}
 

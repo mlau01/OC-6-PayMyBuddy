@@ -7,12 +7,12 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.paymybuddy.puddy.service.UserService;
+import com.paymybuddy.puddy.service.UserServiceImpl;
 
 public class AppAuthProvider extends DaoAuthenticationProvider {
 
 	@Autowired
-	UserService userDetailsService;
+	UserServiceImpl userDetailsService;
 	
 	@Override
 	public Authentication authenticate (Authentication authentication) {

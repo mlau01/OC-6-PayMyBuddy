@@ -1,4 +1,4 @@
-package com.paymybuddy.puddy;
+package com.paymybuddy.puddy.integration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
