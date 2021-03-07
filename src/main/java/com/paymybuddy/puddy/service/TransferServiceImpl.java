@@ -84,6 +84,7 @@ public class TransferServiceImpl implements ITransferService {
 		
 		Billing billing = new Billing();
 		billing.setAmount(bill);
+		billing.setCurrency(currency);
 		billing.setUser(transmitterUser);
 		billing.setStatus(BILLING_STATUS.UNPAID);
 		billing.setTransfer(succeedTransfer);

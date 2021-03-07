@@ -14,6 +14,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.paymybuddy.puddy.enums.BILLING_STATUS;
+import com.paymybuddy.puddy.enums.CURRENCY;
 
 import lombok.Data;
 
@@ -29,6 +30,10 @@ public class Billing {
 	
 	@Column(name="amount")
 	private double amount;
+	
+	@Column(name="currency")
+	@Enumerated(EnumType.STRING)
+	private CURRENCY currency;
 	
 	@Column(name="status")
 	@Enumerated(EnumType.STRING)

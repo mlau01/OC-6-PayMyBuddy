@@ -52,6 +52,7 @@ CREATE TABLE billing (
                 transfer_id INT NOT NULL,
                 user_id INT NOT NULL,
                 amount DOUBLE PRECISION NOT NULL,
+                currency VARCHAR(3) NOT NULL,
                 status VARCHAR(6) NOT NULL,
                 PRIMARY KEY (id)
 );
