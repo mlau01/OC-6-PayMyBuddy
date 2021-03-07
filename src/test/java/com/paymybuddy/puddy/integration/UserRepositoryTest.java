@@ -31,7 +31,7 @@ public class UserRepositoryTest {
 		assertEquals("matt.lau@gmail.com", firstUser.getEmail());
 		assertEquals(CURRENCY.EUR, firstUser.getCurrency());
 		
-		assertEquals(2,firstUser.getContacts().size());
+		assertEquals(1,firstUser.getContacts().size());
 		//INSERT INTO user (first_name, last_name, password, email, balance, currency) VALUES ("Matt", "Lau", "test", "matt.lau@gmail.com", 0, "EUR");
 	}
 

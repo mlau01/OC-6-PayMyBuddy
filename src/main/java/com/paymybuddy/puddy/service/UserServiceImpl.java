@@ -8,7 +8,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.paymybuddy.puddy.exceptions.AlreadyExistContactException;
+import com.paymybuddy.puddy.model.Contact;
 import com.paymybuddy.puddy.model.User;
+import com.paymybuddy.puddy.repository.ContactRepository;
 import com.paymybuddy.puddy.repository.UserRepository;
 
 @Service
@@ -16,10 +19,12 @@ public class UserServiceImpl implements UserDetailsService {
 
 	
 	private UserRepository userRepository;
+	private ContactRepository contactRepo;
 	
 	@Autowired
-	public UserServiceImpl(UserRepository p_userRepo) {
+	public UserServiceImpl(UserRepository p_userRepo, ContactRepository p_contactRepository) {
 		userRepository = p_userRepo;
+		contactRepo = p_contactRepository;
 	}
 	
 	/**
@@ -74,6 +79,28 @@ public class UserServiceImpl implements UserDetailsService {
 	public User debit(User user, double amount) {
 		user.setBalance(user.getBalance() - amount);
 		return userRepository.save(user);
+	}
+	
+	/**
+	 * Add a contact by his mail address
+	 * @param mail
+	 * @author Mathias Lauer
+	 * 7 mars 2021
+	 * @throws AlreadyExistContactException 
+	 */
+	public Contact addContact(String userMail, String contactMail) throws AlreadyExistContactException {
+		User user = getUserByMail(userMail);
+		User contact = getUserByMail(contactMail);
+		
+		if(contactRepo.existsByUserAndContact(user, contact)) {
+			throw new AlreadyExistContactException();
+		}
+		
+		Contact newContact = new Contact();
+		newContact.setUser(user);
+		newContact.setContact(contact);
+		
+		return contactRepo.save(newContact);	
 	}
 
 }
