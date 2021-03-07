@@ -17,6 +17,7 @@ import com.paymybuddy.puddy.enums.CURRENCY;
 import com.paymybuddy.puddy.exceptions.InvalidAmountException;
 import com.paymybuddy.puddy.exceptions.NotEnoughCreditException;
 import com.paymybuddy.puddy.model.User;
+import com.paymybuddy.puddy.repository.BillingRepository;
 import com.paymybuddy.puddy.repository.TransferRepository;
 import com.paymybuddy.puddy.service.ITransferService;
 import com.paymybuddy.puddy.service.TransferServiceImpl;
@@ -31,11 +32,14 @@ public class TransferServiceTest {
 	@Mock
 	TransferRepository transferRepo;
 	
+	@Mock
+	BillingRepository billingRepo;
+	
 	ITransferService transferService;
 	
 	@BeforeEach
 	public void setUpPerTest() {
-		transferService = new TransferServiceImpl(userService, transferRepo);
+		transferService = new TransferServiceImpl(userService, transferRepo, billingRepo);
 	}
 	
 	@Test

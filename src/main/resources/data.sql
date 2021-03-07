@@ -36,8 +36,8 @@ CREATE TABLE versement (
 
 CREATE TABLE transfer (
                 id INT AUTO_INCREMENT NOT NULL,
+                transmitter_user_id INT NOT NULL,
                 recipient_user_id INT NOT NULL,
-                source_user_id INT NOT NULL,
                 date DATETIME NOT NULL,
                 amount DOUBLE PRECISION NOT NULL,
                 currency VARCHAR(3) NOT NULL,
@@ -52,7 +52,7 @@ CREATE TABLE billing (
                 transfer_id INT NOT NULL,
                 user_id INT NOT NULL,
                 amount DOUBLE PRECISION NOT NULL,
-                status VARCHAR(5) NOT NULL,
+                status VARCHAR(6) NOT NULL,
                 PRIMARY KEY (id)
 );
 
@@ -78,7 +78,7 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION;
 
 ALTER TABLE transfer ADD CONSTRAINT user_transaction_fk
-FOREIGN KEY (source_user_id)
+FOREIGN KEY (transmitter_user_id)
 REFERENCES user (id)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;

@@ -7,11 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.paymybuddy.puddy.enums.BILLING_STATUS;
 import com.paymybuddy.puddy.enums.CURRENCY;
 import com.paymybuddy.puddy.exceptions.InvalidAmountException;
 import com.paymybuddy.puddy.exceptions.NotEnoughCreditException;
+import com.paymybuddy.puddy.model.Billing;
 import com.paymybuddy.puddy.model.Transfer;
 import com.paymybuddy.puddy.model.User;
+import com.paymybuddy.puddy.repository.BillingRepository;
 import com.paymybuddy.puddy.repository.TransferRepository;
 
 @Service
@@ -19,12 +22,14 @@ public class TransferServiceImpl implements ITransferService {
 	
 	private UserServiceImpl userService;
 	private TransferRepository transferRepo;
+	private BillingRepository billingRepo;
 	private static final double tax = 0.05;
 	
 	@Autowired
-	public TransferServiceImpl(UserServiceImpl p_userService, TransferRepository p_transferRepository) {
+	public TransferServiceImpl(UserServiceImpl p_userService, TransferRepository p_transferRepository, BillingRepository p_billingRepository) {
 		userService = p_userService;
 		transferRepo = p_transferRepository;
+		billingRepo = p_billingRepository;
 	}
 	
 	/**
@@ -52,7 +57,8 @@ public class TransferServiceImpl implements ITransferService {
 		User transmitterUser = userService.getUserByMail(transmitterMail);
 
 		//Calculate taxed amount and check if transmitter has credit to continue
-		double taxedAmount = amount + (amount * 0.05);
+		double bill = amount * tax;
+		double taxedAmount = amount + bill;
 		double transmitterBalance = transmitterUser.getBalance();
 		if(taxedAmount > transmitterBalance) {
 			throw new NotEnoughCreditException("insufficient credit to do this transfer");
@@ -61,6 +67,8 @@ public class TransferServiceImpl implements ITransferService {
 		User recipientUser = userService.getUserByMail(recipientMail);
 		userService.debit(transmitterUser, taxedAmount);
 		userService.credit(recipientUser, amount);
+		
+
 		
 		Transfer transfer = new Transfer();
 
@@ -71,8 +79,18 @@ public class TransferServiceImpl implements ITransferService {
 		transfer.setDate(Date.from(Instant.now()));
 		transfer.setTax(tax);
 		transfer.setDescription(description);
+		
+		Transfer succeedTransfer = transferRepo.save(transfer);
+		
+		Billing billing = new Billing();
+		billing.setAmount(bill);
+		billing.setUser(transmitterUser);
+		billing.setStatus(BILLING_STATUS.UNPAID);
+		billing.setTransfer(succeedTransfer);
+		
+		billingRepo.save(billing);
 
-		return transferRepo.save(transfer);
+		return succeedTransfer;
 	}
 
 }
