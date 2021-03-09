@@ -1,12 +1,24 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="utf-8"/>
-<title>Home</title>
-</head>
-<body>
-	<div>
-		<p th:utext="${name}"></p>
-	</div>
-</body>
+<html>
+    <head>
+        <meta charset="utf-8" />
+		<link rel="stylesheet" href="general-style.css"/>
+        <link rel="stylesheet" href="header-style.css"/>
+        <title>Home</title>
+    </head>
+        <header id="header_fixed">
+            <div id="menu_decoration">
+                <span class="paymybuddy">Pay My Buddy</span>
+            </div>
+            <div id="menu">
+                <a th:href="@{/home}">Home</a>
+                <a th:href="@{/transfer}">Transfer</a>
+                <a href="#">Profile</a>
+                <a href="#">Contact</a>
+                <a href="#">Log off</a>
+            </div>
+            <div id="navigation" class="bgcolor_grey"><a href="#">Home</a></div>
+        </header>
+    <body>
+    </body>
 </html>

@@ -1,0 +1,75 @@
+#send_money {
+    max-width: 70%;
+    margin:auto;
+    margin-top: 150px;
+}
+
+#send_money_header {
+    padding:20px;
+    padding-right: 0px;
+}
+
+#send_money_header input {
+    float:right;
+    padding:10px;
+    font-size: 0.8em;
+}
+
+#send_money_content {
+    padding: 40px;
+    text-align: center;
+}
+
+#send_money_content_inputs {
+    display:inline-block;
+    max-width: 100%;
+    margin: auto;
+}
+
+.send_money_textinput{
+    height: 40px;
+    margin:10px;
+    font-size: 1em;
+    text-align: center;
+    border: 1.5px solid black;
+    border-radius: 0px;
+}
+
+#transaction {
+    max-width: 70%;
+    margin:auto;
+    margin-top: 30px;
+}
+
+#transaction_header {
+    padding:20px;
+    padding-right: 0px;
+}
+
+#transaction_table {
+    border:1.5px solid black;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#transaction_table th {
+    padding:40px;
+    background-color: #5cb85c;
+    font-weight: normal;
+    color:white;
+}
+
+#page_selection {
+    margin:auto;
+    display:block;
+    text-align: center;
+}
+
+#page_selection a {
+    display:inline-block;
+    padding:10px;
+    margin-left: 0px;
+    margin-right: 0px;
+    text-decoration: none;
+    color: #0275d8;
+}

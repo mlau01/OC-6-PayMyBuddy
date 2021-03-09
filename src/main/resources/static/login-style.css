@@ -1,0 +1,81 @@
+.btn_submit {
+    width: 150px;
+    color:white;
+    border-radius: 4px;
+    background-color: #0275d8;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    padding:15px;
+    font-size: 1.2em;
+    font-weight: bold;
+    border:0px;
+}
+
+.form_input {
+    width:400px;
+    height: 50px;
+    border-radius: 10px;
+    border:solid 2px #a9a9a9;
+    margin:auto;
+    padding: 8px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    font-size: 1.1em;
+    color:grey;
+}
+
+.form_checkbox_span {
+    display: block;
+    padding: 25px;
+    font-size: 1.2em;
+}
+
+.form_checkbox {
+    width: 20px;
+    height: 20px;
+}
+
+.login_section {
+    display:block;
+    border-radius: 15px;
+    max-width: 450px;
+    height: 550px;
+    border:solid 2px #a9a9a9;
+    margin: auto;
+    margin-top:60px;
+    text-align: center;
+}
+
+#header_fixed {
+    width: 99%;
+    margin:auto;
+    position: fixed;
+}
+
+#menu {
+    float:right;
+    padding:15px;
+}
+#menu_decoration {
+    display:inline-block;
+}
+#navigation {
+    display:block;
+    width:100%;
+    padding:15px;
+}
+
+.bgcolor_grey {
+    background-color: #f5f5f5;
+}
+
+#header_fixed a {
+    color:black;
+    text-decoration: none;
+    padding:5px;
+}
+
+#header_fixed div {
+    margin:1px;
+}

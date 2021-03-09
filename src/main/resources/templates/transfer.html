@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="general-style.css"/>
+        <link rel="stylesheet" href="header-style.css"/>
+        <link rel="stylesheet" href="transfer-style.css"/>
+        <title>Transfer</title>
+    </head>
+    <body>
+        <header id="header_fixed">
+            <div id="menu_decoration">
+                <span class="paymybuddy">Pay My Buddy</span>
+            </div>
+            <div id="menu">
+                <a th:href="@{/home}">Home</a>
+                <a th:href="@{/transfer}">Transfer</a>
+                <a href="#">Profile</a>
+                <a href="#">Contact</a>
+                <a href="#">Log off</a>
+            </div>
+            <div id="navigation" class="bgcolor_grey"><a th:href="@{/home}">Home / </a><span>Transfer</span></div>
+        </header>
+        <div id="send_money">
+            <div id="send_money_header">
+                <span>Send Money</span>
+                <input type="button" class="btn_submit bgcolor_blue" value="Add Connection" name="add_connection"/></div>
+            <div id="send_money_content" class="bgcolor_grey">
+                <div id="send_money_content_inputs">
+                    <input list="connections" class="send_money_textinput" placeholder="Select a connection" name="connections"/>
+                    <datalist id="connections">
+                        <option th:each="user : ${contacts}" th:value="${user.email}"/>
+                    </datalist>
+                    <input type="number" class="send_money_textinput" placeholder="1€" min="1" name="amount"/>
+                    <input type="button" class="btn_submit bgcolor_green" value="Pay"/>
+                </div>
+            </div>
+        </div>
+        <div id="transaction">
+            <div id="transaction_header">
+                <span>My Transactions</span>
+            </div>
+            <table id="transaction_table">
+                <tr>
+                    <th>Connections</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                </tr>
+                <tr th:each="transfer : ${transfers}">
+                    <td th:utext="${transfer.recipient.firstName}"></td>
+                    <td th:utext="${transfer.description}"></td>
+                    <td th:utext="${transfer.amount}"></td>
+                </tr>
+                
+            </table>
+            <div id="page_selection">
+                    <a href="#">«</a>
+                    <a href="#">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#">4</a>
+                    <a href="#">5</a>
+                    <a href="#">»</a>
+            </div>
+        </div>
+    </body>
+</html>

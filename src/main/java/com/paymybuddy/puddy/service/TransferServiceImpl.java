@@ -72,7 +72,7 @@ public class TransferServiceImpl implements ITransferService {
 		
 		Transfer transfer = new Transfer();
 
-		transfer.setSource(transmitterUser);
+		transfer.setTransmitter(transmitterUser);
 		transfer.setRecipient(recipientUser);
 		transfer.setCurrency(currency);
 		transfer.setAmount(amount);
