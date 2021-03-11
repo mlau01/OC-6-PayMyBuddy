@@ -6,6 +6,9 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -97,10 +100,11 @@ public class TransferServiceImpl implements ITransferService {
 	}
 
 	@Override
-	public Iterator<Transfer> getTransferOfUser(String mail) {
+	@Transactional
+	public Iterator<Transfer> getTransferOfUser(String mail, int page) {
 		User user = userService.getUserByMail(mail);
 		
-		return transferRepo.findAllByTransmitterOrRecipient(user,user).iterator();
+		return transferRepo.findAllByTransmitter(user, PageRequest.of(page, 5, Sort.by("date"))).iterator();
 	}
 	
 	

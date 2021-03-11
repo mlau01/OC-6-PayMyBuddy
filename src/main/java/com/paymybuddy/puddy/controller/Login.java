@@ -9,16 +9,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.paymybuddy.puddy.model.User;
-import com.paymybuddy.puddy.service.UserServiceImpl;
+import com.paymybuddy.puddy.service.ITransferService;
+import com.paymybuddy.puddy.service.IUserService;
 
 @Controller
 public class Login {
 	
-	private UserServiceImpl userService;
+	private IUserService userService;
+	private ITransferService transferService;
 	
 	@Autowired
-	public Login(UserServiceImpl p_userService) {
+	public Login(IUserService p_userService, ITransferService p_transferService) {
 		userService = p_userService;
+		transferService = p_transferService;
 	}
 	
 	@GetMapping(value="/login")
@@ -36,7 +39,7 @@ public class Login {
 	public String transfer(Principal principal, Model model, @RequestParam(defaultValue = "0") int page) {
 		User user = userService.getUserByMail(principal.getName());
 		model.addAttribute("contacts", user.getContacts());
-		//ymodel.addAttribute("transfers", userService.getTransfers(mail, page));
+		model.addAttribute("transfers", transferService.getTransferOfUser(principal.getName(), page));
 		return "transfer";
 	}
 

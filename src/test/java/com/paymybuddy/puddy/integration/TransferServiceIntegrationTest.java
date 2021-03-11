@@ -42,7 +42,7 @@ public class TransferServiceIntegrationTest {
 	
 	@Test
 	public void getUserTransfers_shouldReturnSetOfTransfer() {
-		Iterator<Transfer> transfersIterator = transferService.getTransferOfUser("matt.lau@gmail.com");
+		Iterator<Transfer> transfersIterator = transferService.getTransferOfUser("matt.lau@gmail.com", 0);
 		
 		assertEquals("test", transfersIterator.next().getDescription());
 	}

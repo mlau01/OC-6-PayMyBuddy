@@ -12,5 +12,5 @@ public interface ITransferService {
 	public Transfer doTransfer(String sourceMail, String recipientMail, double amount, CURRENCY currency, String description) 
 			throws NotEnoughCreditException, InvalidAmountException;
 	
-	public Iterator<Transfer> getTransferOfUser(String mail);
+	public Iterator<Transfer> getTransferOfUser(String mail, int page);
 }

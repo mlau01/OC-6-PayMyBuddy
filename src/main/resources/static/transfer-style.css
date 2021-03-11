@@ -50,13 +50,21 @@
     border:1.5px solid black;
     border-collapse: collapse;
     width: 100%;
+    text-align: center;
 }
 
 #transaction_table th {
-    padding:40px;
     background-color: #5cb85c;
     font-weight: normal;
     color:white;
+}
+
+#transaction_table tr th {
+    padding:40px;
+}
+
+#transaction_table tr:nth-child(even) {
+    background-color: #f5f5f5;
 }
 
 #page_selection {
