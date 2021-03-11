@@ -36,7 +36,7 @@ public class Login {
 	public String transfer(Principal principal, Model model, @RequestParam(defaultValue = "0") int page) {
 		User user = userService.getUserByMail(principal.getName());
 		model.addAttribute("contacts", user.getContacts());
-		//model.addAttribute("transfers", userService.getTransfers(mail, page));
+		//ymodel.addAttribute("transfers", userService.getTransfers(mail, page));
 		return "transfer";
 	}
 

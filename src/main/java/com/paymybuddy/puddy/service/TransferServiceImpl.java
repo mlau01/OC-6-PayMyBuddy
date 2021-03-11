@@ -2,6 +2,8 @@ package com.paymybuddy.puddy.service;
 
 import java.time.Instant;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -93,5 +95,14 @@ public class TransferServiceImpl implements ITransferService {
 
 		return succeedTransfer;
 	}
+
+	@Override
+	public Iterator<Transfer> getTransferOfUser(String mail) {
+		User user = userService.getUserByMail(mail);
+		
+		return transferRepo.findAllByTransmitterOrRecipient(user,user).iterator();
+	}
+	
+	
 
 }

@@ -1,24 +1,20 @@
 package com.paymybuddy.puddy.service;
 
 import java.util.Iterator;
-import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.paymybuddy.puddy.exceptions.AlreadyExistContactException;
 import com.paymybuddy.puddy.model.Contact;
-import com.paymybuddy.puddy.model.Transfer;
 import com.paymybuddy.puddy.model.User;
 import com.paymybuddy.puddy.repository.ContactRepository;
 import com.paymybuddy.puddy.repository.UserRepository;
 
 @Service
-public class UserServiceImpl implements UserDetailsService {
+public class UserServiceImpl implements IUserService {
 
 	
 	private UserRepository userRepository;
@@ -30,20 +26,6 @@ public class UserServiceImpl implements UserDetailsService {
 		contactRepo = p_contactRepository;
 	}
 	
-	/**
-	 * Used by Spring Security for login
-	 * Encapsulation of an User retrieved by mail
-	 * @param mail Mail
-	 * @return UserDetails object encapsulate the User
-	 * @author Mathias Lauer
-	 * 5 mars 2021
-	 */
-	@Override
-	public UserDetails loadUserByUsername(String mail){
-		Objects.requireNonNull(mail);
-		
-		return getUserByMail(mail);
-	}
 	
 	/**
 	 * Get an user by his mail
@@ -113,11 +95,9 @@ public class UserServiceImpl implements UserDetailsService {
 		return contactRepo.save(newContact);	
 	}
 
-	@Transactional
-	public Iterator<Transfer> getUserTransferByMail(String mail, int size, int page) {
-		User user = getUserByMail(mail);
+	public void addNewUser(String string, String string2, String string3, String string4) {
+		// TODO Auto-generated method stub
 		
-		return user.getTransfers().iterator();
 	}
 
 }

@@ -6,13 +6,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import com.paymybuddy.puddy.service.UserServiceImpl;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 public class AppAuthProvider extends DaoAuthenticationProvider {
 
 	@Autowired
-	UserServiceImpl userDetailsService;
+	UserDetailsService userDetailsService;
 	
 	@Override
 	public Authentication authenticate (Authentication authentication) {

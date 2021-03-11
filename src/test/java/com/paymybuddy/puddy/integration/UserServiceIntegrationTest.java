@@ -5,9 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Iterator;
-import java.util.Set;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,10 +13,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.paymybuddy.puddy.exceptions.AlreadyExistContactException;
 import com.paymybuddy.puddy.model.Contact;
-import com.paymybuddy.puddy.model.Transfer;
 import com.paymybuddy.puddy.model.User;
 import com.paymybuddy.puddy.repository.ContactRepository;
-import com.paymybuddy.puddy.service.UserServiceImpl;
+import com.paymybuddy.puddy.service.ITransferService;
+import com.paymybuddy.puddy.service.IUserService;
 
 @SpringBootTest
 public class UserServiceIntegrationTest {
@@ -27,7 +25,10 @@ public class UserServiceIntegrationTest {
 	ContactRepository contactRepo;
 	
 	@Autowired
-	UserServiceImpl userService;
+	IUserService userService;
+	
+	@Autowired
+	ITransferService transferService;
 	
 	@Test
 	public void updateBalanceTest_shouldUpdateCorrectlyUserBalance() {
@@ -63,11 +64,8 @@ public class UserServiceIntegrationTest {
 	}
 	
 	@Test
-	@Disabled
-	public void getUserTransfers_shouldReturnSetOfTransfer() {
-		Iterator<Transfer> transfersIterator = userService.getUserTransferByMail("matt.lau@gmail.com", 0, 1);
-		
-		assertEquals("test", transfersIterator.next().getDescription());
+	public void addNewUser_shouldReturnUserCreated() {
+		userService.addNewUser("Roland", "Lau", "roland.lau@gmail.com", "test");
 	}
 	
 }

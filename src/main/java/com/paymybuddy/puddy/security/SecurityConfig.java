@@ -9,14 +9,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import com.paymybuddy.puddy.service.UserServiceImpl;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Autowired
-	UserServiceImpl userDetailsService;
+	UserDetailsService userDetailsService;
 	
 	@Bean
 	@Override

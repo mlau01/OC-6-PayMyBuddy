@@ -61,6 +61,7 @@ public class User implements Serializable, UserDetails {
 				inverseJoinColumns = {@JoinColumn(name="contact_user_id")})
 	private Set<User> contacts;
 	
+	/*
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "owner_user_id")
 	private Set<BankAccount> bankAccounts;
@@ -68,6 +69,7 @@ public class User implements Serializable, UserDetails {
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "transmitter_user_id")
 	private Set<Transfer> transfers;
+	*/
 	
 	public String getUsername() {
 		return email;
