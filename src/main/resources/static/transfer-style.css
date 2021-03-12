@@ -54,12 +54,13 @@
 }
 
 #transaction_table th {
+    padding:40px;
     background-color: #5cb85c;
     font-weight: normal;
     color:white;
 }
 
-#transaction_table tr th {
+#transaction_table td {
     padding:40px;
 }
 
