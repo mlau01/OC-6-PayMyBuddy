@@ -57,13 +57,11 @@
                 
             </table>
             <div id="page_selection">
-                    <a href="#">«</a>
-                    <a href="#">1</a>
-                    <a href="#">2</a>
-                    <a href="#">3</a>
-                    <a href="#">4</a>
-                    <a href="#">5</a>
-                    <a href="#">»</a>
+                    <a th:href="@{/transfer?page=0}">«</a>
+                    <th:block th:each="i: ${#numbers.sequence(0, transferTotalPages - 1)}">
+                        <a th:href="@{/transfer?page={p}(p=${i})}" th:text="${i + 1}"></a>
+                    </th:block>
+                    <a th:href="@{/transfer?page={tp}(tp=${transferTotalPages})}">»</a>
             </div>
         </div>
     </body>

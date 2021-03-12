@@ -31,6 +31,12 @@ public class Login {
 		return "login";
 	}
 	
+	@GetMapping(value="/")
+	public String root(Principal principal, Model model) {
+		model.addAttribute("name", principal.getName());
+		return "home";
+	}
+	
 	@GetMapping(value="/home")
 	public String home(Principal principal, Model model) {
 		model.addAttribute("name", principal.getName());
@@ -44,7 +50,6 @@ public class Login {
 		model.addAttribute("contacts", user.getContacts());
 		model.addAttribute("transfers", pages);
 		model.addAttribute("transferTotalPages", pages.getTotalPages());
-		System.out.println(pages.getTotalPages());
 		return "transfer";
 	}
 
