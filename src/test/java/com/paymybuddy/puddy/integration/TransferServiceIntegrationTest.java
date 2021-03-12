@@ -1,12 +1,14 @@
 package com.paymybuddy.puddy.integration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.util.Iterator;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 
 import com.paymybuddy.puddy.enums.CURRENCY;
 import com.paymybuddy.puddy.exceptions.InvalidAmountException;
@@ -42,8 +44,8 @@ public class TransferServiceIntegrationTest {
 	
 	@Test
 	public void getUserTransfers_shouldReturnSetOfTransfer() {
-		Iterator<Transfer> transfersIterator = transferService.getTransferOfUser("matt.lau@gmail.com", 0);
+		Page<Transfer> transfersPage = transferService.getTransferOfUser("matt.lau@gmail.com", 0);
 		
-		assertEquals("test", transfersIterator.next().getDescription());
+		assertFalse(transfersPage.isEmpty());
 	}
 }
