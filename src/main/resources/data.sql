@@ -8,7 +8,7 @@ CREATE TABLE user (
                 first_name VARCHAR(20) NOT NULL,
                 last_name VARCHAR(20) NOT NULL,
                 password VARCHAR(20) NOT NULL,
-                email VARCHAR(50) NOT NULL,
+                email VARCHAR(50) NOT NULL UNIQUE,
                 balance DOUBLE PRECISION NOT NULL,
                 currency VARCHAR(3) NOT NULL,
                 PRIMARY KEY (id)
@@ -16,7 +16,7 @@ CREATE TABLE user (
 
 
 CREATE TABLE bank_account (
-                iban VARCHAR(50) NOT NULL,
+                iban VARCHAR(50) NOT NULL UNIQUE,
                 owner_user_id INT NOT NULL,
                 description VARCHAR(100) NOT NULL,
                 PRIMARY KEY (iban)

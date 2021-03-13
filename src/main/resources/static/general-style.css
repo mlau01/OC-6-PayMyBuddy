@@ -24,6 +24,7 @@ body {
     padding:15px;
     font-weight: bold;
     border:0px;
+    cursor: pointer;
 }
 
 .bgcolor_grey {

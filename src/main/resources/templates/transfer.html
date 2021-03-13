@@ -20,7 +20,7 @@
                 <a th:href="@{/transfer}">Transfer</a>
                 <a href="#">Profile</a>
                 <a href="#">Contact</a>
-                <a href="#">Log off</a>
+                <a th:href="@{/logoff}">Log off</a>
             </div>
             <div id="navigation" class="bgcolor_grey"><a th:href="@{/home}">Home / </a><span>Transfer</span></div>
         </header>
@@ -29,14 +29,14 @@
                 <span>Send Money</span>
                 <input type="button" class="btn_submit bgcolor_blue" value="Add Connection" name="add_connection"/></div>
             <div id="send_money_content" class="bgcolor_grey">
-                <div id="send_money_content_inputs">
+                <form id="send_money_content_inputs" th:action="@{/transfer}" method="post">
                     <input list="connections" class="send_money_textinput" placeholder="Select a connection" name="connections"/>
                     <datalist id="connections">
                         <option th:each="user : ${contacts}" th:value="${user.email}"/>
                     </datalist>
                     <input type="number" class="send_money_textinput" placeholder="1€" min="1" name="amount"/>
-                    <input type="button" class="btn_submit bgcolor_green" value="Pay"/>
-                </div>
+                    <input type="submit" class="btn_submit bgcolor_green" value="Pay"/>
+                </form>
             </div>
         </div>
         <div id="transaction">
