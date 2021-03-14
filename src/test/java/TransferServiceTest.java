@@ -1,6 +1,9 @@
 
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,10 +11,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 
 import com.paymybuddy.puddy.enums.CURRENCY;
 import com.paymybuddy.puddy.exceptions.InvalidAmountException;
@@ -43,9 +42,9 @@ public class TransferServiceTest {
 	}
 	
 	@Test
-	public void doTransferWithInvalidAmountTest_shouldThrowException() throws NotEnoughCreditException, InvalidAmountException {
+	public void doTransferWithInvalidAmountTest_shouldThrowException() throws NotEnoughCreditException, IllegalArgumentException {
 		
-		assertThrows(InvalidAmountException.class, () -> transferService.doTransfer("matt.lau@gmail.com", "yann.lau@gmail.com", 0, CURRENCY.EUR, "test"));
+		assertThrows(IllegalArgumentException.class, () -> transferService.doTransfer("matt.lau@gmail.com", "yann.lau@gmail.com", 0, CURRENCY.EUR, "test"));
 	}
 	
 	@Test

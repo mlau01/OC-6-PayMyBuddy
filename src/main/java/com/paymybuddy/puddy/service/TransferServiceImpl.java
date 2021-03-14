@@ -55,6 +55,11 @@ public class TransferServiceImpl implements ITransferService {
 	@Transactional
 	public Transfer doTransfer(String transmitterMail, String recipientMail, double amount, CURRENCY currency, String description) 
 			throws NotEnoughCreditException, InvalidAmountException {
+		if(transmitterMail == null || transmitterMail.isEmpty() ||
+				recipientMail == null || recipientMail.isEmpty() ||
+				amount <= 0) {
+					throw new IllegalArgumentException("One or more argument is not valid");
+				}
 		
 		if(amount <= 0) {
 			throw new InvalidAmountException("Amount cannot be 0 or minus");

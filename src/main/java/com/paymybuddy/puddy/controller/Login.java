@@ -2,13 +2,20 @@ package com.paymybuddy.puddy.controller;
 
 import java.security.Principal;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.paymybuddy.puddy.enums.CURRENCY;
+import com.paymybuddy.puddy.exceptions.InvalidAmountException;
+import com.paymybuddy.puddy.exceptions.NotEnoughCreditException;
 import com.paymybuddy.puddy.model.Transfer;
 import com.paymybuddy.puddy.model.User;
 import com.paymybuddy.puddy.service.ITransferService;
@@ -16,6 +23,8 @@ import com.paymybuddy.puddy.service.IUserService;
 
 @Controller
 public class Login {
+	
+	private static Logger log = LoggerFactory.getLogger(Login.class);
 	
 	private IUserService userService;
 	private ITransferService transferService;
@@ -51,6 +60,22 @@ public class Login {
 		model.addAttribute("transfers", pages);
 		model.addAttribute("transferTotalPages", pages.getTotalPages());
 		return "transfer";
+	}
+	
+	@PostMapping(value="/transfer")
+	public String doTransfer(Principal principal,
+			@RequestParam("connections") String connections,
+			@RequestParam("amount") String amount,
+			@RequestParam("description") String description) {
+		log.info("POST Request on /transfer with params: connections: {}, amount: {}, description: {}", connections, amount, description);
+		
+		try {
+			transferService.doTransfer(principal.getName(), connections, Double.parseDouble(amount), CURRENCY.EUR, description);
+		} catch (NumberFormatException | NotEnoughCreditException | InvalidAmountException e) {
+			log.info(e.getMessage());
+			e.printStackTrace();
+		}
+		return "redirect:/transfer";
 	}
 
 }
