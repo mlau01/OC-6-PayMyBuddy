@@ -11,19 +11,7 @@
         <title>Transfer</title>
     </head>
     <body>
-        <header id="header_fixed">
-            <div id="menu_decoration">
-                <span class="paymybuddy">Pay My Buddy</span>
-            </div>
-            <div id="menu">
-                <a th:href="@{/home}">Home</a>
-                <a th:href="@{/transfer}">Transfer</a>
-                <a href="#">Profile</a>
-                <a href="#">Contact</a>
-                <a th:href="@{/logoff}">Log off</a>
-            </div>
-            <div id="navigation" class="bgcolor_grey"><a th:href="@{/home}">Home / </a><span>Transfer</span></div>
-        </header>
+        <header th:insert="header :: header"></header>
         <div id="send_money">
             <div id="send_money_header">
                 <span>Send Money</span>

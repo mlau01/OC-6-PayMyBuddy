@@ -27,6 +27,12 @@ body {
     cursor: pointer;
 }
 
+.spanerror {
+    font-size: 0.5em;
+    color:red;
+    display:block;
+}
+
 .bgcolor_grey {
     background-color: #f5f5f5;
 }

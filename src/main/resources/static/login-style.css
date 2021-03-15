@@ -41,7 +41,7 @@
     display:block;
     border-radius: 15px;
     max-width: 450px;
-    height: 550px;
+    padding:20px;
     border:solid 2px #a9a9a9;
     margin: auto;
     margin-top:60px;

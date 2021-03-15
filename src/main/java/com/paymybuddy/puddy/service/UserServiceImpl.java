@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.paymybuddy.puddy.exceptions.AlreadyExistContactException;
 import com.paymybuddy.puddy.model.Contact;
 import com.paymybuddy.puddy.model.User;
+import com.paymybuddy.puddy.model.UserForm;
 import com.paymybuddy.puddy.repository.ContactRepository;
 import com.paymybuddy.puddy.repository.UserRepository;
 
@@ -95,8 +96,8 @@ public class UserServiceImpl implements IUserService {
 		return contactRepo.save(newContact);	
 	}
 
-	public void addNewUser(String firstName, String lastName, String email, String password) {
-		// "Roland", "Lau", "roland.lau@gmail.com", "test");
+	public void addNewUser(UserForm userForm) {
+		
 		
 	}
 

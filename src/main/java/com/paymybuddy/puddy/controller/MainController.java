@@ -11,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +24,7 @@ import com.paymybuddy.puddy.exceptions.InvalidAmountException;
 import com.paymybuddy.puddy.exceptions.NotEnoughCreditException;
 import com.paymybuddy.puddy.model.Transfer;
 import com.paymybuddy.puddy.model.User;
+import com.paymybuddy.puddy.model.UserForm;
 import com.paymybuddy.puddy.service.ITransferService;
 import com.paymybuddy.puddy.service.IUserService;
 
@@ -82,16 +85,19 @@ public class MainController {
 	}
 	
 	@GetMapping(value="/register")
-	public String register() {
+	public String register(UserForm userForm) {
 		return "register";
 	}
 	@PostMapping(value="/register")
-	public String submitRegister(@Valid @ModelAttribute("user") User user, BindingResult bindingResult) {
+	public String submitRegister(@Valid UserForm userForm, BindingResult bindingResult) {
+		
+		bindingResult.addError(new FieldError("password_confirm", "password_confirm","La confirmation du mot de passe doit correspondre"));
 		if(bindingResult.hasErrors()) {
 			return "register";
 		}
 		else
 		{
+			userService.addNewUser(userForm);
 			return "register_success";
 		}
 	}

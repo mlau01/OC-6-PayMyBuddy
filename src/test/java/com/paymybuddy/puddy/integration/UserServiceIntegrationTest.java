@@ -67,7 +67,7 @@ public class UserServiceIntegrationTest {
 	
 	@Test
 	public void addNewUser_shouldReturnUserCreated() {
-		userService.addNewUser("Roland", "Lau", "roland.lau@gmail.com", "test");
+		//userService.addNewUser();
 	}
 	
 }
