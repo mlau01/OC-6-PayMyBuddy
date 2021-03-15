@@ -41,9 +41,8 @@ public class Login {
 	}
 	
 	@GetMapping(value="/")
-	public String root(Principal principal, Model model) {
-		model.addAttribute("name", principal.getName());
-		return "home";
+	public String root() {
+		return "redirect:/home";
 	}
 	
 	@GetMapping(value="/home")
