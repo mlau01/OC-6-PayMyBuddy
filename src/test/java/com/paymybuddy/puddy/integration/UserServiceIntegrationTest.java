@@ -61,7 +61,7 @@ public class UserServiceIntegrationTest {
 	@Test
 	public void getUserContacts_shouldReturnSetOfUser() {
 		Iterator<User> contactsIterator = userService.getUserContactsByMail("matt.lau@gmail.com");
-		//TODO Sometimes its a different user here
+
 		assertTrue(contactsIterator.hasNext());
 	}
 	

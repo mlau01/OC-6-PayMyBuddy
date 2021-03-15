@@ -2,13 +2,17 @@ package com.paymybuddy.puddy.controller;
 
 import java.security.Principal;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,15 +26,15 @@ import com.paymybuddy.puddy.service.ITransferService;
 import com.paymybuddy.puddy.service.IUserService;
 
 @Controller
-public class Login {
+public class MainController {
 	
-	private static Logger log = LoggerFactory.getLogger(Login.class);
+	private static Logger log = LoggerFactory.getLogger(MainController.class);
 	
 	private IUserService userService;
 	private ITransferService transferService;
 	
 	@Autowired
-	public Login(IUserService p_userService, ITransferService p_transferService) {
+	public MainController(IUserService p_userService, ITransferService p_transferService) {
 		userService = p_userService;
 		transferService = p_transferService;
 	}
@@ -75,6 +79,21 @@ public class Login {
 			e.printStackTrace();
 		}
 		return "redirect:/transfer";
+	}
+	
+	@GetMapping(value="/register")
+	public String register() {
+		return "register";
+	}
+	@PostMapping(value="/register")
+	public String submitRegister(@Valid @ModelAttribute("user") User user, BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			return "register";
+		}
+		else
+		{
+			return "register_success";
+		}
 	}
 
 }
