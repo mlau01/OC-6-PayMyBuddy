@@ -20,7 +20,7 @@
             </div>
             <div id="navigation" class="bgcolor_grey">
                 <a th:href="@{/home}">Home</a>
-                <span th:if="${page != null}" th:text="${page}"></span>
+                <span th:if="${location != null}" th:text="${location}"></span>
                 <span th:text="${#numbers.formatDecimal(user.balance,0,2)} + ' ' + ${user.currency}" style="float:right; padding:15px;"></span>
             </div>
         </header>

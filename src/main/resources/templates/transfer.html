@@ -9,16 +9,15 @@
     </head>
     <body>
         <header th:insert="header :: header"></header>
-        <div id="send_money">
+        <section id="send_money">
             <div id="send_money_header">
                 <span>Send Money</span>
-                <a th:href="@{/contact}" class="btn_submit bgcolor_blue" name="add_contact" style="float:right;">Add Contact</a>
             </div>
             <div id="send_money_content" class="bgcolor_grey">
                 <form id="send_money_content_inputs" th:action="@{/transfer}" method="post">
                     <select class="send_money_textinput" name="connections" form="send_money_content_inputs">
                         <option value="">Select a contact</option>
-                        <option th:each="user : ${contacts}" th:value="${user.email}" th:text="${user.firstName} + ' ' + ${user.lastName}"></option>
+                        <option th:each="user : ${user.contacts}" th:value="${user.email}" th:text="${user.firstName} + ' ' + ${user.lastName}"></option>
                     </select>
                     <input type="number" class="send_money_textinput" placeholder="Amount" min="1" name="amount"/>
                     <input type="text" class="send_money_textinput" placeholder="Description" name="description"/>
@@ -26,12 +25,12 @@
                     <span th:if="${error != null}" th:text="${error}" class="spanerror" style="padding:15px;"></span>
                 </form>
             </div>
-        </div>
-        <div id="transaction">
+        </section>
+        <section id="transaction">
             <div id="transaction_header">
                 <span>My Transactions</span>
             </div>
-            <table id="transaction_table">
+            <table id="transaction_table" class="table">
                 <tr>
                     <th>Contact</th>
                     <th>Description</th>
@@ -51,6 +50,6 @@
                     </th:block>
                     <a th:href="@{/transfer?page={tp}(tp=${transferTotalPages})}">»</a>
             </div>
-        </div>
+        </section>
     </body>
 </html>

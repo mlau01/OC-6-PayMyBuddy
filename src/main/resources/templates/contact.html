@@ -13,26 +13,25 @@
         <div id="send_money">
             <div id="send_money_header">
                 <span>Add Contact</span>
-                <a th:href="@{/addcontact}" class="btn_submit bgcolor_blue" name="add_contact">Add Contact</a>
             </div>
             <div id="send_money_content" class="bgcolor_grey">
-            <form id="addcontact" th:action="@{/contacts}" method="post">
-                <input type="text" class="send_money_textinput" placeholder="Email" name="email"/>
+            <form id="addcontact" th:action="@{/contact}" method="post">
+                <input type="text" class="send_money_textinput" style="width: 250px;" placeholder="Email" name="email"/>
                 <input type="submit" class="btn_submit bgcolor_green" value="Add"/>
                 <span th:if="${error != null}" th:text="${error}" class="spanerror" style="padding:15px;"></span>
             </form>
         </div>
-        <div id="contact">
+        <div id="contact" style="padding-top: 50px">
             <div id="contact_header">
-                <span>My Contacts/span>
+                <span>My Contacts</span>
             </div>
-            <table id="contact_table">
+            <table id="contact_table" class="table">
                 <tr>
                     <th>First name</th>
                     <th>Last name</th>
                     <th>Email</th>
                 </tr>
-                <tr th:each="user : ${contacts}">
+                <tr th:each="user : ${user.contacts}">
                     <td th:utext="${user.firstName}"></td>
                     <td th:utext="${user.lastName}"></td>
                     <td th:utext="${user.email}"></td>

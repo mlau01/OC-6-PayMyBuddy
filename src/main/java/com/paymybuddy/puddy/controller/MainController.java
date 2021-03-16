@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.paymybuddy.puddy.enums.CURRENCY;
+import com.paymybuddy.puddy.exceptions.AlreadyExistContactException;
 import com.paymybuddy.puddy.exceptions.EmailAlreadyExistsException;
 import com.paymybuddy.puddy.exceptions.InvalidAmountException;
 import com.paymybuddy.puddy.exceptions.InvalidArgumentException;
@@ -68,10 +70,9 @@ public class MainController {
 		User user = userService.getUserByMail(principal.getName());
 		Page<Transfer> pages = transferService.getTransferOfUser(principal.getName(), page);
 		model.addAttribute("user", user);
-		model.addAttribute("contacts", user.getContacts());
 		model.addAttribute("transfers", pages);
 		model.addAttribute("transferTotalPages", pages.getTotalPages());
-		model.addAttribute("page", " / Transfer");
+		model.addAttribute("location", " / Transfer");
 		return "transfer";
 	}
 	
@@ -122,8 +123,20 @@ public class MainController {
 	@GetMapping(value="/contact")
 	public String contact(Principal principal, Model model) {
 		User user = userService.getUserByMail(principal.getName());
-		model.addAttribute("contacts", user.getContacts());
+		model.addAttribute("user", user);
+		model.addAttribute("location", " / Contact");
 		return "contact";
+	}
+	
+	@PostMapping(value="/contact")
+	public String postContact(Principal principal, Model model, @RequestParam("email") String email) {
+		try {
+			userService.addContact(principal.getName(), email);
+		} catch (AlreadyExistContactException | UsernameNotFoundException e) {
+			log.error(e.getMessage());
+			model.addAttribute("error", e.getMessage());
+		}
+		return contact(principal, model);
 	}
 
 }
