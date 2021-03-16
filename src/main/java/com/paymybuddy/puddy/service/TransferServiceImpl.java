@@ -55,7 +55,7 @@ public class TransferServiceImpl implements ITransferService {
 	 * 5 mars 2021
 	 * @throws InvalidArgumentException 
 	 */
-	@Transactional
+	@Transactional(readOnly = false)
 	public Transfer doTransfer(String transmitterMail, String recipientMail, String amount_string, CURRENCY currency, String description) 
 			throws NotEnoughCreditException, InvalidArgumentException {
 		
@@ -113,7 +113,7 @@ public class TransferServiceImpl implements ITransferService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public Page<Transfer> getTransferOfUser(String mail, int page) {
 		User user = userService.getUserByMail(mail);
 		Page<Transfer> pages = transferRepo.findAllByTransmitter(user, PageRequest.of(page, 5, Sort.by("date").descending()));
