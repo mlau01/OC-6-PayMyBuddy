@@ -13,13 +13,13 @@
     <form class="login_section" th:action="@{/register}" method="post" th:object="${userForm}">
         <span class="paymybuddy" style="display:block; margin: auto; margin-top: 40px; margin-bottom: 40px;">Pay My Buddy</span>
 
-        <input type="text" class="form_input" placeholder="First name" name="firstName"/>
+        <input type="text" class="form_input" placeholder="First name" name="firstName" th:value="${userForm.firstName}"/>
         <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="spanerror">First name error</span>
 
-        <input type="text" class="form_input" placeholder="Last name" name="lastName"/>
+        <input type="text" class="form_input" placeholder="Last name" name="lastName" th:value="${userForm.lastName}"/>
         <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="spanerror">Last name error</span>
 
-        <input type="text" class="form_input" placeholder="Email" name="email"/>
+        <input type="text" class="form_input" placeholder="Email" name="email" th:value="${userForm.email}"/>
         <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="spanerror">Email error</span>
 
         <input type="password" class="form_input" placeholder="Password" name="password"/>

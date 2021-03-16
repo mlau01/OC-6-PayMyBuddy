@@ -91,10 +91,11 @@ public class MainController {
 		return "register";
 	}
 	@PostMapping(value="/register")
-	public String submitRegister(@Valid UserForm userForm, BindingResult bindingResult) {
+	public String submitRegister(@Valid UserForm userForm, BindingResult bindingResult, Model model) {
 		
 		
 		if(bindingResult.hasErrors()) {
+			model.addAttribute("userForm", userForm);
 			return "register";
 		}
 		else
