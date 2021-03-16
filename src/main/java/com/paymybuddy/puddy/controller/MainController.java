@@ -57,7 +57,8 @@ public class MainController {
 	
 	@GetMapping(value="/home")
 	public String home(Principal principal, Model model) {
-		model.addAttribute("name", principal.getName());
+		User user = userService.getUserByMail(principal.getName());
+		model.addAttribute("user", user);
 		return "home";
 	}
 	
@@ -65,9 +66,11 @@ public class MainController {
 	public String transfer(Principal principal, Model model, @RequestParam(defaultValue = "0") int page) {
 		User user = userService.getUserByMail(principal.getName());
 		Page<Transfer> pages = transferService.getTransferOfUser(principal.getName(), page);
+		model.addAttribute("user", user);
 		model.addAttribute("contacts", user.getContacts());
 		model.addAttribute("transfers", pages);
 		model.addAttribute("transferTotalPages", pages.getTotalPages());
+		model.addAttribute("page", " / Transfer");
 		return "transfer";
 	}
 	
