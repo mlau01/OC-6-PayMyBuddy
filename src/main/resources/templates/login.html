@@ -14,6 +14,7 @@
             <span class="paymybuddy" style="display:block; margin: auto; margin-bottom: 40px;">Pay My Buddy</span>
             <input type="text" class="form_input" placeholder="Email" name="username"/>
             <input type="password" class="form_input" placeholder="Password" name="password"/>
+            <span class="spanerror" th:if="${error eq 'error'}">Username / password incorrect</span>
             <span class="form_checkbox_span"><input class="form_checkbox" type="checkbox" name="remember">Remember me</span>
             <input type="submit" class="btn_submit bgcolor_blue" style="margin-top: 40px;" value="Login"/>
             <span class="form_checkbox_span">New user ?</span>
