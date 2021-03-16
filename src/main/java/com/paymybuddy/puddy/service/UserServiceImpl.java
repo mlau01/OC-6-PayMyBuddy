@@ -7,7 +7,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.paymybuddy.puddy.enums.CURRENCY;
 import com.paymybuddy.puddy.exceptions.AlreadyExistContactException;
+import com.paymybuddy.puddy.exceptions.EmailAlreadyExistsException;
+import com.paymybuddy.puddy.exceptions.PasswordNotMatchException;
 import com.paymybuddy.puddy.model.Contact;
 import com.paymybuddy.puddy.model.User;
 import com.paymybuddy.puddy.model.UserForm;
@@ -96,8 +99,23 @@ public class UserServiceImpl implements IUserService {
 		return contactRepo.save(newContact);	
 	}
 
-	public void addNewUser(UserForm userForm) {
+	public User addNewUser(UserForm userForm) throws PasswordNotMatchException, EmailAlreadyExistsException {
+		if( ! userForm.getPassword().equals(userForm.getPassword_confirm())) {
+			throw new PasswordNotMatchException("La confirmation du mot de passe doit correspondre");
+		}
+		if(userRepository.existsByEmail(userForm.getEmail())) {
+			throw new EmailAlreadyExistsException("Cette email existe déjà");
+		}
 		
+		User newUser = new User();
+		newUser.setCurrency(CURRENCY.EUR);
+		newUser.setEmail(userForm.getEmail());
+		newUser.setPassword(userForm.getPassword());
+		newUser.setFirstName(userForm.getFirstName());
+		newUser.setLastName(userForm.getLastName());
+		newUser.setBalance(0.);
+		
+		return userRepository.save(newUser);
 		
 	}
 

@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.paymybuddy.puddy.enums.CURRENCY;
+import com.paymybuddy.puddy.exceptions.EmailAlreadyExistsException;
 import com.paymybuddy.puddy.exceptions.InvalidAmountException;
 import com.paymybuddy.puddy.exceptions.NotEnoughCreditException;
+import com.paymybuddy.puddy.exceptions.PasswordNotMatchException;
 import com.paymybuddy.puddy.model.Transfer;
 import com.paymybuddy.puddy.model.User;
 import com.paymybuddy.puddy.model.UserForm;
@@ -91,13 +93,21 @@ public class MainController {
 	@PostMapping(value="/register")
 	public String submitRegister(@Valid UserForm userForm, BindingResult bindingResult) {
 		
-		bindingResult.addError(new FieldError("password_confirm", "password_confirm","La confirmation du mot de passe doit correspondre"));
+		
 		if(bindingResult.hasErrors()) {
 			return "register";
 		}
 		else
 		{
-			userService.addNewUser(userForm);
+			try {
+				userService.addNewUser(userForm);
+			} catch (PasswordNotMatchException e) {
+				bindingResult.addError(new FieldError("password_confirm", "password_confirm", e.getMessage()));
+				return "register";
+			} catch (EmailAlreadyExistsException e) {
+				bindingResult.addError(new FieldError("email", "email", e.getMessage()));
+				return "register";
+			}
 			return "register_success";
 		}
 	}

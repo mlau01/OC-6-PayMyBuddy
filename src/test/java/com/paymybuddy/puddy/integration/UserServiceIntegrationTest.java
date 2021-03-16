@@ -13,9 +13,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.paymybuddy.puddy.exceptions.AlreadyExistContactException;
+import com.paymybuddy.puddy.exceptions.EmailAlreadyExistsException;
+import com.paymybuddy.puddy.exceptions.PasswordNotMatchException;
 import com.paymybuddy.puddy.model.Contact;
 import com.paymybuddy.puddy.model.User;
+import com.paymybuddy.puddy.model.UserForm;
 import com.paymybuddy.puddy.repository.ContactRepository;
+import com.paymybuddy.puddy.repository.UserRepository;
 import com.paymybuddy.puddy.service.ITransferService;
 import com.paymybuddy.puddy.service.IUserService;
 
@@ -30,6 +34,9 @@ public class UserServiceIntegrationTest {
 	
 	@Autowired
 	ITransferService transferService;
+	
+	@Autowired
+	UserRepository userRepo;
 	
 	@Test
 	public void updateBalanceTest_shouldUpdateCorrectlyUserBalance() {
@@ -66,8 +73,30 @@ public class UserServiceIntegrationTest {
 	}
 	
 	@Test
-	public void addNewUser_shouldReturnUserCreated() {
-		//userService.addNewUser();
+	public void addNewUser_shouldReturnUserCreated() throws PasswordNotMatchException, EmailAlreadyExistsException {
+		UserForm userForm = new UserForm();
+		userForm.setFirstName("Eric");
+		userForm.setLastName("Yoto");
+		userForm.setEmail("eric.yoto@gmail.com");
+		userForm.setPassword("test");
+		userForm.setPassword_confirm("test");
+		
+		User user = userService.addNewUser(userForm);
+		
+		assertEquals("eric.yoto@gmail.com", user.getEmail());
+		userRepo.delete(user);
+	}
+	
+	@Test
+	public void addUserTest_shouldThrowEmailException() {
+		UserForm userForm = new UserForm();
+		userForm.setFirstName("Matt");
+		userForm.setLastName("Lau");
+		userForm.setEmail("matt.lau@gmail.com");
+		userForm.setPassword("test");
+		userForm.setPassword_confirm("test");
+		
+		assertThrows(EmailAlreadyExistsException.class, () -> userService.addNewUser(userForm));
 	}
 	
 }
