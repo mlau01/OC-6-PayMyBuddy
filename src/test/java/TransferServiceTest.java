@@ -13,7 +13,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.paymybuddy.puddy.enums.CURRENCY;
-import com.paymybuddy.puddy.exceptions.InvalidAmountException;
+import com.paymybuddy.puddy.exceptions.InvalidArgumentException;
 import com.paymybuddy.puddy.exceptions.NotEnoughCreditException;
 import com.paymybuddy.puddy.model.User;
 import com.paymybuddy.puddy.repository.BillingRepository;
@@ -44,11 +44,11 @@ public class TransferServiceTest {
 	@Test
 	public void doTransferWithInvalidAmountTest_shouldThrowException() throws NotEnoughCreditException, IllegalArgumentException {
 		
-		assertThrows(IllegalArgumentException.class, () -> transferService.doTransfer("matt.lau@gmail.com", "yann.lau@gmail.com", "0", CURRENCY.EUR, "test"));
+		assertThrows(InvalidArgumentException.class, () -> transferService.doTransfer("matt.lau@gmail.com", "yann.lau@gmail.com", "0", CURRENCY.EUR, "test"));
 	}
 	
 	@Test
-	public void doTransferWithGreaterAmountTest_shouldThrowException() throws NotEnoughCreditException, InvalidAmountException {
+	public void doTransferWithGreaterAmountTest_shouldThrowException() throws NotEnoughCreditException{
 		User user = new User();
 		user.setBalance(0.);
 		when(userService.getUserByMail(anyString())).thenReturn(user);

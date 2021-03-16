@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.paymybuddy.puddy.enums.CURRENCY;
 import com.paymybuddy.puddy.exceptions.AlreadyExistContactException;
 import com.paymybuddy.puddy.exceptions.EmailAlreadyExistsException;
-import com.paymybuddy.puddy.exceptions.InvalidAmountException;
 import com.paymybuddy.puddy.exceptions.InvalidArgumentException;
 import com.paymybuddy.puddy.exceptions.NotEnoughCreditException;
 import com.paymybuddy.puddy.exceptions.PasswordNotMatchException;
