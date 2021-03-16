@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 
 import com.paymybuddy.puddy.enums.CURRENCY;
 import com.paymybuddy.puddy.exceptions.InvalidAmountException;
+import com.paymybuddy.puddy.exceptions.InvalidArgumentException;
 import com.paymybuddy.puddy.exceptions.NotEnoughCreditException;
 import com.paymybuddy.puddy.model.Transfer;
 import com.paymybuddy.puddy.model.User;
@@ -28,7 +29,7 @@ public class TransferServiceIntegrationTest {
 	private IUserService userService;
 	
 	@Test
-	public void doTransferTest_shouldCreateNewTranferAndUpdateUserBalances() throws NotEnoughCreditException, InvalidAmountException {
+	public void doTransferTest_shouldCreateNewTranferAndUpdateUserBalances() throws NotEnoughCreditException, InvalidArgumentException {
 		final double amount = 12;
 		User transmitter = userService.getUserByMail("matt.lau@gmail.com");
 		User recipient = userService.getUserByMail("yann.lau@gmail.com");
@@ -36,7 +37,7 @@ public class TransferServiceIntegrationTest {
 		double transmitterBalanceBfTransfer = transmitter.getBalance();
 		double recipientBalanceBfTransfer = recipient.getBalance();
 		
-		transferService.doTransfer("matt.lau@gmail.com", "yann.lau@gmail.com", amount, CURRENCY.EUR, "test");
+		transferService.doTransfer("matt.lau@gmail.com", "yann.lau@gmail.com", String.valueOf(amount), CURRENCY.EUR, "test");
 		
 		assertEquals(transmitterBalanceBfTransfer - (amount + (amount * 0.05)), userService.getUserByMail("matt.lau@gmail.com").getBalance());
 		assertEquals(recipientBalanceBfTransfer + amount, userService.getUserByMail("yann.lau@gmail.com").getBalance());

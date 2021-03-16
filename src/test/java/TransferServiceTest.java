@@ -44,7 +44,7 @@ public class TransferServiceTest {
 	@Test
 	public void doTransferWithInvalidAmountTest_shouldThrowException() throws NotEnoughCreditException, IllegalArgumentException {
 		
-		assertThrows(IllegalArgumentException.class, () -> transferService.doTransfer("matt.lau@gmail.com", "yann.lau@gmail.com", 0, CURRENCY.EUR, "test"));
+		assertThrows(IllegalArgumentException.class, () -> transferService.doTransfer("matt.lau@gmail.com", "yann.lau@gmail.com", "0", CURRENCY.EUR, "test"));
 	}
 	
 	@Test
@@ -53,7 +53,7 @@ public class TransferServiceTest {
 		user.setBalance(0.);
 		when(userService.getUserByMail(anyString())).thenReturn(user);
 		
-		assertThrows(NotEnoughCreditException.class, () -> transferService.doTransfer("matt.lau@gmail.com", "yann.lau@gmail.com", 9999999, CURRENCY.EUR, "test"));
+		assertThrows(NotEnoughCreditException.class, () -> transferService.doTransfer("matt.lau@gmail.com", "yann.lau@gmail.com", "9999999", CURRENCY.EUR, "test"));
 		verify(userService, Mockito.times(1)).getUserByMail(anyString());
 	}
 

@@ -25,6 +25,7 @@ body {
     font-weight: bold;
     border:0px;
     cursor: pointer;
+    text-decoration: none;
 }
 
 .spanerror {

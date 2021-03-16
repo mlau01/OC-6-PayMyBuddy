@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.paymybuddy.puddy.enums.CURRENCY;
 import com.paymybuddy.puddy.exceptions.EmailAlreadyExistsException;
 import com.paymybuddy.puddy.exceptions.InvalidAmountException;
+import com.paymybuddy.puddy.exceptions.InvalidArgumentException;
 import com.paymybuddy.puddy.exceptions.NotEnoughCreditException;
 import com.paymybuddy.puddy.exceptions.PasswordNotMatchException;
 import com.paymybuddy.puddy.model.Transfer;
@@ -75,19 +76,20 @@ public class MainController {
 	}
 	
 	@PostMapping(value="/transfer")
-	public String doTransfer(Principal principal,
+	public String doTransfer(Principal principal, Model model,
 			@RequestParam("connections") String connections,
 			@RequestParam("amount") String amount,
 			@RequestParam("description") String description) {
 		log.info("POST Request on /transfer with params: connections: {}, amount: {}, description: {}", connections, amount, description);
 		
 		try {
-			transferService.doTransfer(principal.getName(), connections, Double.parseDouble(amount), CURRENCY.EUR, description);
-		} catch (NumberFormatException | NotEnoughCreditException | InvalidAmountException e) {
-			log.info(e.getMessage());
-			e.printStackTrace();
+			transferService.doTransfer(principal.getName(), connections, amount, CURRENCY.EUR, description);
+		} catch (NotEnoughCreditException | InvalidArgumentException e) {
+			log.error(e.getMessage());
+			model.addAttribute("error", e.getMessage());
 		}
-		return "redirect:/transfer";
+		
+		return transfer(principal, model, 0);
 	}
 	
 	@GetMapping(value="/register")
@@ -115,6 +117,13 @@ public class MainController {
 			}
 			return "register_success";
 		}
+	}
+	
+	@GetMapping(value="/contact")
+	public String contact(Principal principal, Model model) {
+		User user = userService.getUserByMail(principal.getName());
+		model.addAttribute("contacts", user.getContacts());
+		return "contact";
 	}
 
 }

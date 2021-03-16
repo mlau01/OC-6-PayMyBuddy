@@ -2,11 +2,10 @@ package com.paymybuddy.puddy.service;
 
 import java.time.Instant;
 import java.util.Date;
-import java.util.Iterator;
-import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -16,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.paymybuddy.puddy.enums.BILLING_STATUS;
 import com.paymybuddy.puddy.enums.CURRENCY;
 import com.paymybuddy.puddy.exceptions.InvalidAmountException;
+import com.paymybuddy.puddy.exceptions.InvalidArgumentException;
 import com.paymybuddy.puddy.exceptions.NotEnoughCreditException;
 import com.paymybuddy.puddy.model.Billing;
 import com.paymybuddy.puddy.model.Transfer;
@@ -25,6 +25,8 @@ import com.paymybuddy.puddy.repository.TransferRepository;
 
 @Service
 public class TransferServiceImpl implements ITransferService {
+	
+	private static Logger log = LoggerFactory.getLogger(TransferServiceImpl.class);
 	
 	private UserServiceImpl userService;
 	private TransferRepository transferRepo;
@@ -51,19 +53,24 @@ public class TransferServiceImpl implements ITransferService {
 	 * @throws {@link NotEnoughCreditException}
 	 * @author Mathias Lauer
 	 * 5 mars 2021
+	 * @throws InvalidArgumentException 
 	 */
 	@Transactional
-	public Transfer doTransfer(String transmitterMail, String recipientMail, double amount, CURRENCY currency, String description) 
-			throws NotEnoughCreditException, InvalidAmountException {
+	public Transfer doTransfer(String transmitterMail, String recipientMail, String amount_string, CURRENCY currency, String description) 
+			throws NotEnoughCreditException, InvalidArgumentException {
+		
+		double amount;
+		try {
+			amount = Double.parseDouble(amount_string);
+		} catch (NumberFormatException e) {
+			throw new InvalidArgumentException("Amount format error");
+		}
+		
 		if(transmitterMail == null || transmitterMail.isEmpty() ||
 				recipientMail == null || recipientMail.isEmpty() ||
 				amount <= 0) {
-					throw new IllegalArgumentException("One or more argument is not valid");
+					throw new InvalidArgumentException("One or more argument are not valid");
 				}
-		
-		if(amount <= 0) {
-			throw new InvalidAmountException("Amount cannot be 0 or minus");
-		}
 		
 		User transmitterUser = userService.getUserByMail(transmitterMail);
 
