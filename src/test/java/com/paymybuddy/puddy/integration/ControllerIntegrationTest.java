@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -66,11 +67,4 @@ public class ControllerIntegrationTest {
 		mockMvc.perform(get("/contact"))
 		.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("http://localhost/login"));
 	}
-	
-	@Test
-	@WithUserDetails("user1@mail.com")
-	public void homeSecurityTestAuthenticatedUser_shouldReturnStatusOk() throws Exception {
-		mockMvc.perform(get("/home")).andExpect(status().isOk());
-	}
-
 }
