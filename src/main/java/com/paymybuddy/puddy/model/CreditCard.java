@@ -1,5 +1,6 @@
 package com.paymybuddy.puddy.model;
 
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -14,18 +15,24 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name="bank_account")
-public class BankAccount {
+@Table(name="credit_card")
+public class CreditCard {
 	
 	@Id
-	@Column(name="iban")
-	private String iban;
+	@Column(name="number")
+	private String number;
+	
+	@Column(name="security_code")
+	private int securityCode;
+	
+	@Column(name="expire")
+	private Date expire;
 	
 	@Column(name="description")
 	private String description;
 	
 	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "bank_account_iban")
+	@JoinColumn(name = "credit_card_id")
 	private Set<Versement> versement;
 
 }

@@ -26,8 +26,8 @@ public class Versement {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = "bank_account_iban")
-	private String bankAccountIban;
+	@Column(name = "credit_card_number")
+	private String creditCardNumber;
 	
 	@Column(name="date")
 	private Date date;
