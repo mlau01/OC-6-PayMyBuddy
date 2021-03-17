@@ -15,17 +15,20 @@ CREATE TABLE user (
 );
 
 
-CREATE TABLE bank_account (
-                iban VARCHAR(50) NOT NULL UNIQUE,
+CREATE TABLE credit_card (
+                number VARCHAR(16) NOT NULL UNIQUE,
+                security_code INT NOT NULL,
+                expire DATE NOT NULL,
                 owner_user_id INT NOT NULL,
                 description VARCHAR(100) NOT NULL,
-                PRIMARY KEY (iban)
+                PRIMARY KEY (number)
 );
+
 
 
 CREATE TABLE versement (
                 id INT AUTO_INCREMENT NOT NULL,
-                bank_account_iban VARCHAR(50) NOT NULL,
+                credit_card_number VARCHAR(50) NOT NULL,
                 date DATETIME NOT NULL,
                 description VARCHAR(100),
                 amount DOUBLE PRECISION NOT NULL,
@@ -90,21 +93,21 @@ REFERENCES user (id)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
 
-ALTER TABLE bank_account ADD CONSTRAINT user_bankaccount_fk
+ALTER TABLE credit_card ADD CONSTRAINT user_bankaccount_fk
 FOREIGN KEY (owner_user_id)
 REFERENCES user (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE versement ADD CONSTRAINT credit_card_versement_fk
+FOREIGN KEY (credit_card_number)
+REFERENCES credit_card (number)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
 
 ALTER TABLE billing ADD CONSTRAINT user_billing_fk
 FOREIGN KEY (user_id)
 REFERENCES user (id)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION;
-
-ALTER TABLE versement ADD CONSTRAINT bankaccount_banktransfer_fk
-FOREIGN KEY (bank_account_iban)
-REFERENCES bank_account (iban)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
 

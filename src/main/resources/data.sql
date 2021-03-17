@@ -15,17 +15,21 @@ CREATE TABLE user (
 );
 
 
-CREATE TABLE bank_account (
-                iban VARCHAR(50) NOT NULL UNIQUE,
+
+CREATE TABLE credit_card (
+                number VARCHAR(16) NOT NULL UNIQUE,
+                security_code INT NOT NULL,
+                expire DATE NOT NULL,
                 owner_user_id INT NOT NULL,
                 description VARCHAR(100) NOT NULL,
-                PRIMARY KEY (iban)
+                PRIMARY KEY (number)
 );
+
 
 
 CREATE TABLE versement (
                 id INT AUTO_INCREMENT NOT NULL,
-                bank_account_iban VARCHAR(50) NOT NULL,
+                credit_card_number VARCHAR(50) NOT NULL,
                 date DATETIME NOT NULL,
                 description VARCHAR(100),
                 amount DOUBLE PRECISION NOT NULL,
@@ -90,9 +94,15 @@ REFERENCES user (id)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
 
-ALTER TABLE bank_account ADD CONSTRAINT user_bankaccount_fk
+ALTER TABLE credit_card ADD CONSTRAINT user_bankaccount_fk
 FOREIGN KEY (owner_user_id)
 REFERENCES user (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE versement ADD CONSTRAINT credit_card_versement_fk
+FOREIGN KEY (credit_card_number)
+REFERENCES credit_card (number)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
 
@@ -102,26 +112,20 @@ REFERENCES user (id)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
 
-ALTER TABLE versement ADD CONSTRAINT bankaccount_banktransfer_fk
-FOREIGN KEY (bank_account_iban)
-REFERENCES bank_account (iban)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION;
-
 ALTER TABLE billing ADD CONSTRAINT transfer_billing_fk
 FOREIGN KEY (transfer_id)
 REFERENCES transfer (id)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
 
-INSERT INTO user (first_name, last_name, password, email, balance, currency) VALUES ("Matt", "Lau", "test", "matt.lau@gmail.com", 0, "EUR");
-INSERT INTO user (first_name, last_name, password, email, balance, currency) VALUES ("Yann", "Lau", "test", "yann.lau@gmail.com", 0, "EUR");
-INSERT INTO user (first_name, last_name, password, email, balance, currency) VALUES ("Herve", "Loiseau", "test", "herve.loiseau@gmail.com", 0, "EUR");
-INSERT INTO user (first_name, last_name, password, email, balance, currency) VALUES ("Jean", "Joubler", "test", "jean.joubler@gmail.com", 0, "EUR");
+INSERT INTO user (first_name, last_name, password, email, balance, currency) VALUES ("Matt", "Lau", "test", "matt.lau@gmail.com", 200, "EUR");
+INSERT INTO user (first_name, last_name, password, email, balance, currency) VALUES ("Yann", "Lau", "test", "yann.lau@gmail.com", 200, "EUR");
+INSERT INTO user (first_name, last_name, password, email, balance, currency) VALUES ("Herve", "Loiseau", "test", "herve.loiseau@gmail.com", 200, "EUR");
+INSERT INTO user (first_name, last_name, password, email, balance, currency) VALUES ("Jean", "Joubler", "test", "jean.joubler@gmail.com", 200, "EUR");
 INSERT INTO contact (user_id, contact_user_id) VALUES (1,2);
 INSERT INTO contact (user_id, contact_user_id) VALUES (1,3);
-INSERT INTO bank_account (iban, owner_user_id, description) VALUES ("FR00212332043JKRE20", 1, "CCP");
-INSERT INTO versement (bank_account_iban, date, description, amount, currency) VALUES ("FR00212332043JKRE20", "2020-09-24 22:21:20", "test", 29.99, "EUR");
+INSERT INTO credit_card (number, security_code, expire, owner_user_id, description) VALUES ("1234123412341234", "123", "2021-09-00", 1, "CCP");
+INSERT INTO versement (credit_card_number, date, description, amount, currency) VALUES ("1234123412341234", "2020-09-24 22:21:20", "test", 29.99, "EUR");
 INSERT INTO transfer (transmitter_user_id, recipient_user_id, date, amount, currency, tax, description) VALUES (1, 2, "2021-01-22", 12, "EUR", 0.05, "test 1");
 INSERT INTO transfer (transmitter_user_id, recipient_user_id, date, amount, currency, tax, description) VALUES (1, 3, "2021-01-24", 122, "EUR", 0.05, "test 2");
 INSERT INTO transfer (transmitter_user_id, recipient_user_id, date, amount, currency, tax, description) VALUES (1, 2, "2021-01-25", 0.99, "EUR", 0.05, "test 3");
