@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="../static/general-style.css"  th:href="@{general-style.css}"/>
+        <link rel="stylesheet" href="../static/header-style.css" th:href="@{header-style.css}"/>
+        <link rel="stylesheet" href="../static/login-style.css" th:href="@{login-style.css}"/>
+        <title>Profile</title>
+    </head>
+        
+    <body>
+        <header th:insert="header :: header"></header>
+        <section class="section firstsection">
+            <form class="login_section" th:action="@{/profile}" method="post" th:object="${userForm}">
+                <input type="text" class="form_input" placeholder="First name" name="firstName" th:value="${user.firstName}"/>
+                <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="spanerror">First name error</span>
+        
+                <input type="text" class="form_input" placeholder="Last name" name="lastName" th:value="${user.lastName}"/>
+                <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="spanerror">Last name error</span>
+        
+                <input type="text" class="form_input" placeholder="Email" name="email" th:value="${user.email}"/>
+                <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="spanerror">Email error</span>
+        
+                <input type="password" class="form_input" placeholder="Password" name="password" th:value="${user.password}"/>
+                <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="spanerror">Password error</span>
+        
+                <input type="password" class="form_input" placeholder="Password confirmation" name="password_confirm" th:value="${user.password}"/>
+                <span th:if="${#fields.hasErrors('password_confirm')}" th:errors="*{password_confirm}" class="spanerror">Password error</span>
+        
+                <input type="submit" class="btn_submit bgcolor_blue" style="margin-top: 40px;" value="Save"/>
+            </form>
+        </section>
+    </body>
+</html>

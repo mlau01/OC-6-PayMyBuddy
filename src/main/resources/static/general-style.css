@@ -46,6 +46,12 @@ body {
     background-color: #5cb85c;
 }
 
+.firstsection {
+    max-width: 70%;
+    margin:auto;
+    margin-top: 150px;
+}
+
 /**TABLE CLASS**/
 .table {
     border:1.5px solid black;

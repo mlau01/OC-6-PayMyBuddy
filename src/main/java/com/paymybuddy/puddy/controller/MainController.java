@@ -92,6 +92,14 @@ public class MainController {
 		return transfer(principal, model, 0);
 	}
 	
+	@GetMapping(value="/profile")
+	public String profile(Principal principal, UserForm userForm, Model model) {
+		User user = userService.getUserByMail(principal.getName());
+		model.addAttribute("user", user);
+		model.addAttribute("location", " / Profile");
+		return "profile";
+	}
+	
 	@GetMapping(value="/register")
 	public String register(UserForm userForm) {
 		return "register";
@@ -137,12 +145,4 @@ public class MainController {
 		}
 		return contact(principal, model);
 	}
-	
-	/*
-	@GetMapping(value="/logoff")
-	public String logoff(Principal principal) {
-		principal.
-		return "login";
-	}
-	*/
 }

@@ -16,7 +16,7 @@
             </div>
             <div id="send_money_content" class="bgcolor_grey">
             <form id="addcontact" th:action="@{/contact}" method="post">
-                <input type="text" class="send_money_textinput" style="width: 250px;" placeholder="Email" name="email"/>
+                <input type="text" class="send_money_textinput" style="width: 300px;" placeholder="Email" name="email"/>
                 <input type="submit" class="btn_submit bgcolor_green" value="Add"/>
                 <span th:if="${error != null}" th:text="${error}" class="spanerror" style="padding:15px;"></span>
             </form>
