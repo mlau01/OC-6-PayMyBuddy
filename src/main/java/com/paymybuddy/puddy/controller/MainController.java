@@ -138,9 +138,11 @@ public class MainController {
 		return contact(principal, model);
 	}
 	
+	/*
 	@GetMapping(value="/logoff")
 	public String logoff(Principal principal) {
-		return null;
+		principal.
+		return "login";
 	}
-
+	*/
 }

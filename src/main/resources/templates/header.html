@@ -8,6 +8,11 @@
     </head>
     <body>
         <header id="header_fixed" th:fragment="header">
+            <form id="logoutform" th:action="@{/logout}" method="post">
+                <input type="hidden"
+                       th:name="${_csrf.parameterName}"
+                       th:value="${_csrf.token}"/>
+           </form>
             <div id="menu_decoration">
                 <span class="paymybuddy">Pay My Buddy</span>
             </div>
@@ -16,7 +21,7 @@
                 <a th:href="@{/transfer}">Transfer</a>
                 <a th:href="@{/profil}">Profile</a>
                 <a th:href="@{/contact}">Contact</a>
-                <a th:href="@{/logoff}">Log off</a>
+                <a href="#" onclick="document.getElementById('logoutform').submit();">Logout</a>
             </div>
             <div id="navigation" class="bgcolor_grey">
                 <a th:href="@{/home}">Home</a>
