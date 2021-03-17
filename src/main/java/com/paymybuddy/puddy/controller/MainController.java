@@ -100,6 +100,31 @@ public class MainController {
 		return "profile";
 	}
 	
+	@PostMapping(value = "/profile")
+	public String postProfile(@Valid UserForm userForm, BindingResult bindingResult, Principal principal, Model model) {
+		model.addAttribute("userForm", userForm);
+		User user = userService.getUserByMail(principal.getName());
+		model.addAttribute("user", user);
+		model.addAttribute("location", " / Profile");
+		if(bindingResult.hasErrors()) {
+			
+			return "profile";
+		}
+		else
+		{
+			try {
+				userService.editUser(userForm, user);
+			} catch (PasswordNotMatchException e) {
+				bindingResult.addError(new FieldError("password_confirm", "password_confirm", e.getMessage()));
+				return "profile";
+			} catch (EmailAlreadyExistsException e) {
+				bindingResult.addError(new FieldError("email", "email", e.getMessage()));
+				return "profile";
+			}
+			return "redirect:/home";
+		}
+	}
+	
 	@GetMapping(value="/register")
 	public String register(UserForm userForm) {
 		return "register";

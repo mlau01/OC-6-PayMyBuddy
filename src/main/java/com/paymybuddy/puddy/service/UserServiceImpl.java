@@ -100,9 +100,7 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	public User addNewUser(UserForm userForm) throws PasswordNotMatchException, EmailAlreadyExistsException {
-		if( ! userForm.getPassword().equals(userForm.getPassword_confirm())) {
-			throw new PasswordNotMatchException("La confirmation du mot de passe doit correspondre");
-		}
+		checkPassword(userForm);
 		if(userRepository.existsByEmail(userForm.getEmail())) {
 			throw new EmailAlreadyExistsException("Cette email existe déjà");
 		}
@@ -117,6 +115,31 @@ public class UserServiceImpl implements IUserService {
 		
 		return userRepository.save(newUser);
 		
+	}
+
+
+	@Override
+	public User editUser(UserForm userForm, User user) throws PasswordNotMatchException, EmailAlreadyExistsException {
+		checkPassword(userForm);
+		if( ! user.getEmail().equals(userForm.getEmail())) {
+			if(userRepository.existsByEmail(userForm.getEmail())) {
+				throw new EmailAlreadyExistsException("Cette email existe déjà");
+			}
+			
+			user.setEmail(userForm.getEmail());
+		}
+	
+		user.setFirstName(userForm.getFirstName());
+		user.setLastName(userForm.getLastName());
+		
+		user.setPassword(userForm.getPassword());
+		return userRepository.save(user);
+	}
+	
+	private void checkPassword(UserForm userForm) throws PasswordNotMatchException, EmailAlreadyExistsException {
+		if( ! userForm.getPassword().equals(userForm.getPassword_confirm())) {
+			throw new PasswordNotMatchException("La confirmation du mot de passe doit correspondre");
+		}
 	}
 
 }

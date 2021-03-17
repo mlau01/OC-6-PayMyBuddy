@@ -14,6 +14,7 @@ public interface IUserService {
 	public User credit(User user, double amount);
 	public User debit(User user, double amount);
 	public User addNewUser(UserForm userForm) throws PasswordNotMatchException, EmailAlreadyExistsException;
+	public User editUser(UserForm userForm, User user) throws PasswordNotMatchException, EmailAlreadyExistsException;
 	public Contact addContact(String userMail, String contactMail) throws AlreadyExistContactException;
 	public Iterator<User> getUserContactsByMail(String mail);
 }
