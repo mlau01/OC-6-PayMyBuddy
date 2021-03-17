@@ -8,7 +8,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.paymybuddy.puddy.exceptions.EmailAlreadyExistsException;
 import com.paymybuddy.puddy.exceptions.PasswordNotMatchException;
-import com.paymybuddy.puddy.model.UserForm;
+import com.paymybuddy.puddy.form.UserForm;
 import com.paymybuddy.puddy.repository.ContactRepository;
 import com.paymybuddy.puddy.repository.UserRepository;
 import com.paymybuddy.puddy.service.IUserService;

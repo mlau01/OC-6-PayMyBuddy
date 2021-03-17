@@ -11,9 +11,9 @@ import com.paymybuddy.puddy.enums.CURRENCY;
 import com.paymybuddy.puddy.exceptions.AlreadyExistContactException;
 import com.paymybuddy.puddy.exceptions.EmailAlreadyExistsException;
 import com.paymybuddy.puddy.exceptions.PasswordNotMatchException;
+import com.paymybuddy.puddy.form.UserForm;
 import com.paymybuddy.puddy.model.Contact;
 import com.paymybuddy.puddy.model.User;
-import com.paymybuddy.puddy.model.UserForm;
 import com.paymybuddy.puddy.repository.ContactRepository;
 import com.paymybuddy.puddy.repository.UserRepository;
 
@@ -44,7 +44,14 @@ public class UserServiceImpl implements IUserService {
 		return user;
 	}
 	
-	@Transactional
+	/**
+	 * Get the contact list of an user
+	 * @param mail of the user
+	 * @return Iterator<User> Iterator over the user contact list
+	 * @author Mathias Lauer
+	 * 17 mars 2021
+	 */
+	@Transactional(readOnly = true)
 	public Iterator<User> getUserContactsByMail(String mail){
 		User user = getUserByMail(mail);
 		
@@ -79,7 +86,8 @@ public class UserServiceImpl implements IUserService {
 	
 	/**
 	 * Add a contact by his mail address
-	 * @param mail
+	 * @param userMail of the user
+	 * @param contactMail of the contact
 	 * @author Mathias Lauer
 	 * 7 mars 2021
 	 * @throws AlreadyExistContactException 
@@ -99,11 +107,18 @@ public class UserServiceImpl implements IUserService {
 		return contactRepo.save(newContact);	
 	}
 
+	/**
+	 * Persist an user in data base
+	 * @param userForm from containing user datas
+	 * @return User object persisted if successful
+	 * @throws PasswordNotMatchException if password confirmation failed
+	 * @throws EmailAlreadyExistsException if email already exists
+	 * @author Mathias Lauer
+	 * 17 mars 2021
+	 */
 	public User addNewUser(UserForm userForm) throws PasswordNotMatchException, EmailAlreadyExistsException {
 		checkPassword(userForm);
-		if(userRepository.existsByEmail(userForm.getEmail())) {
-			throw new EmailAlreadyExistsException("Cette email existe déjà");
-		}
+		checkEmail(userForm);
 		
 		User newUser = new User();
 		newUser.setCurrency(CURRENCY.EUR);
@@ -117,28 +132,41 @@ public class UserServiceImpl implements IUserService {
 		
 	}
 
-
+	/**
+	 * Update an user in data base
+	 * @param userForm from containing user datas
+	 * @param user to update 
+	 * @return User object persisted if successful
+	 * @throws PasswordNotMatchException if password confirmation failed
+	 * @throws EmailAlreadyExistsException if email already exists
+	 * @author Mathias Lauer
+	 * 17 mars 2021
+	 */
 	@Override
 	public User editUser(UserForm userForm, User user) throws PasswordNotMatchException, EmailAlreadyExistsException {
 		checkPassword(userForm);
 		if( ! user.getEmail().equals(userForm.getEmail())) {
-			if(userRepository.existsByEmail(userForm.getEmail())) {
-				throw new EmailAlreadyExistsException("Cette email existe déjà");
-			}
+			checkEmail(userForm);
 			
 			user.setEmail(userForm.getEmail());
 		}
 	
 		user.setFirstName(userForm.getFirstName());
 		user.setLastName(userForm.getLastName());
-		
 		user.setPassword(userForm.getPassword());
+		
 		return userRepository.save(user);
 	}
 	
-	private void checkPassword(UserForm userForm) throws PasswordNotMatchException, EmailAlreadyExistsException {
+	private void checkPassword(UserForm userForm) throws PasswordNotMatchException {
 		if( ! userForm.getPassword().equals(userForm.getPassword_confirm())) {
 			throw new PasswordNotMatchException("La confirmation du mot de passe doit correspondre");
+		}
+	}
+	
+	private void checkEmail(UserForm userForm) throws EmailAlreadyExistsException {
+		if(userRepository.existsByEmail(userForm.getEmail())) {
+			throw new EmailAlreadyExistsException("Cette email existe déjà");
 		}
 	}
 

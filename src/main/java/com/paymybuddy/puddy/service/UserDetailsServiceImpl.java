@@ -11,6 +11,11 @@ import org.springframework.stereotype.Service;
 import com.paymybuddy.puddy.model.User;
 import com.paymybuddy.puddy.repository.UserRepository;
 
+/**
+ * Used by Spring Security for login
+ * @author Mathias Lauer
+ * 17 mars 2021
+ */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService{
 	

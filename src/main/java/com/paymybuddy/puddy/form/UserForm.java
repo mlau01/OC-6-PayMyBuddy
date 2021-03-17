@@ -1,4 +1,4 @@
-package com.paymybuddy.puddy.model;
+package com.paymybuddy.puddy.form;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;

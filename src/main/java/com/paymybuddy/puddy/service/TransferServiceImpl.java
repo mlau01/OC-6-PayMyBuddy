@@ -3,8 +3,6 @@ package com.paymybuddy.puddy.service;
 import java.time.Instant;
 import java.util.Date;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.paymybuddy.puddy.enums.BILLING_STATUS;
 import com.paymybuddy.puddy.enums.CURRENCY;
-import com.paymybuddy.puddy.exceptions.InvalidAmountException;
 import com.paymybuddy.puddy.exceptions.InvalidArgumentException;
 import com.paymybuddy.puddy.exceptions.NotEnoughCreditException;
 import com.paymybuddy.puddy.model.Billing;
@@ -25,8 +22,6 @@ import com.paymybuddy.puddy.repository.TransferRepository;
 
 @Service
 public class TransferServiceImpl implements ITransferService {
-	
-	private static Logger log = LoggerFactory.getLogger(TransferServiceImpl.class);
 	
 	private UserServiceImpl userService;
 	private TransferRepository transferRepo;
@@ -112,6 +107,13 @@ public class TransferServiceImpl implements ITransferService {
 		return succeedTransfer;
 	}
 
+	/**
+	 * Get a pagineable transfers list of an user, each page contain five transfers
+	 * @param mail Mail of the user
+	 * @param page Page number
+	 * @author Mathias Lauer
+	 * 17 mars 2021
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public Page<Transfer> getTransferOfUser(String mail, int page) {

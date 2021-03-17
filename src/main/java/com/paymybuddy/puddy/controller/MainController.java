@@ -23,9 +23,9 @@ import com.paymybuddy.puddy.exceptions.EmailAlreadyExistsException;
 import com.paymybuddy.puddy.exceptions.InvalidArgumentException;
 import com.paymybuddy.puddy.exceptions.NotEnoughCreditException;
 import com.paymybuddy.puddy.exceptions.PasswordNotMatchException;
+import com.paymybuddy.puddy.form.UserForm;
 import com.paymybuddy.puddy.model.Transfer;
 import com.paymybuddy.puddy.model.User;
-import com.paymybuddy.puddy.model.UserForm;
 import com.paymybuddy.puddy.service.ITransferService;
 import com.paymybuddy.puddy.service.IUserService;
 
