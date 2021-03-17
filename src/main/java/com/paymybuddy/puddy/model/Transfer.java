@@ -2,6 +2,7 @@ package com.paymybuddy.puddy.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -11,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -53,5 +55,4 @@ public class Transfer {
 	@ManyToOne
 	@JoinColumn(name = "recipient_user_id")
 	private User recipient;
-
 }
