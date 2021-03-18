@@ -51,7 +51,8 @@ public class TransferServiceImpl implements ITransferService {
 	 * @throws InvalidArgumentException 
 	 */
 	@Transactional(readOnly = false)
-	public Transfer doTransfer(String transmitterMail, String recipientMail, String amount_string, CURRENCY currency, String description) 
+	public Transfer doTransfer(String transmitterMail, String recipientMail,
+								String amount_string, CURRENCY currency, String description) 
 			throws NotEnoughCreditException, InvalidArgumentException {
 		
 		double amount;
@@ -81,10 +82,7 @@ public class TransferServiceImpl implements ITransferService {
 		userService.debit(transmitterUser, taxedAmount);
 		userService.credit(recipientUser, amount);
 		
-
-		
 		Transfer transfer = new Transfer();
-
 		transfer.setTransmitter(transmitterUser);
 		transfer.setRecipient(recipientUser);
 		transfer.setCurrency(currency);

@@ -43,7 +43,7 @@
                 </tr>
                 
             </table>
-            <div id="page_selection">
+            <div id="page_selection" th:if="${transferTotalPages} &gt; 1">
                     <a th:href="@{/transfer?page=0}">«</a>
                     <th:block th:each="i: ${#numbers.sequence(0, transferTotalPages - 1)}">
                         <a th:href="@{/transfer?page={p}(p=${i})}" th:text="${i + 1}"></a>
