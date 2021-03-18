@@ -2,6 +2,7 @@ package com.paymybuddy.puddy.integration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -71,10 +72,11 @@ public class TransferServiceIntegrationTest {
 		double transmitterBalanceBfTransfer = transmitter.getBalance();
 		double recipientBalanceBfTransfer = recipient.getBalance();
 		
-		transferService.doTransfer("transmitter@mail.com", "recipient@mail.com", String.valueOf(amount), CURRENCY.EUR, "test");
+		Transfer transfer = transferService.doTransfer("transmitter@mail.com", "recipient@mail.com", String.valueOf(amount), CURRENCY.EUR, "test");
 		
 		assertEquals(transmitterBalanceBfTransfer - (amount + (amount * 0.05)), userService.getUserByMail("transmitter@mail.com").getBalance());
 		assertEquals(recipientBalanceBfTransfer + amount, userService.getUserByMail("recipient@mail.com").getBalance());
+		assertNotNull(transfer);
 		
 		billingRepo.deleteAll();
 		transferRepo.deleteAll();

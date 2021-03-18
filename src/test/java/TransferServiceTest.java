@@ -51,9 +51,12 @@ public class TransferServiceTest {
 	public void doTransferWithGreaterAmountTest_shouldThrowException() throws NotEnoughCreditException{
 		User user = new User();
 		user.setBalance(0.);
+		
 		when(userService.getUserByMail(anyString())).thenReturn(user);
 		
-		assertThrows(NotEnoughCreditException.class, () -> transferService.doTransfer("matt.lau@gmail.com", "yann.lau@gmail.com", "9999999", CURRENCY.EUR, "test"));
+		assertThrows(NotEnoughCreditException.class, 
+				() -> transferService.doTransfer("matt.lau@gmail.com", "yann.lau@gmail.com", "9999999", CURRENCY.EUR, "test"));
+		
 		verify(userService, Mockito.times(1)).getUserByMail(anyString());
 	}
 
